@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Secure Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <i class="fas fa-tachometer-alt fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title">Welcome to Your Dashboard</h3>
+                    <p class="text-muted">You have successfully accessed the secure portal</p>
+                </div>
+                
+                <div class="row text-center">
+                    <div class="col-md-6 mb-3">
+                        <div class="p-3 bg-light rounded">
+                            <i class="fas fa-user fa-2x text-primary mb-2"></i>
+                            <h5>Username</h5>
+                            <p class="mb-0">{{ username }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-3 bg-light rounded">
+                            <i class="fas fa-user-tag fa-2x text-primary mb-2"></i>
+                            <h5>Role</h5>
+                            <p class="mb-0">{{ role }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Authentication successful!</strong> You are now logged into the secure system.
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

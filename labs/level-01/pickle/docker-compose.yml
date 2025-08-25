@@ -1,0 +1,18 @@
+services:
+  pickle:
+    build: .
+    container_name: pickle-lab
+    ports:
+      - "8083:5000"
+    networks:
+      - labnet
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pickle.rule=Host(`pickle.local`)"
+      - "traefik.http.services.pickle.loadbalancer.server.port=5000"
+
+networks:
+  labnet:
+    external: true
+    name: labnet
