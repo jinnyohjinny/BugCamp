@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Logs - Web Attacker Server</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            color: #00ff00;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #00ff00;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #00ff00;
+            color: #000;
+        }
+        
+        .stats-bar {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .log-entry {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .method {
+            background: #00ff00;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+        
+        .method.get { background: #00ff00; }
+        .method.post { background: #ffaa00; }
+        .method.put { background: #0088ff; }
+        .method.delete { background: #ff4444; }
+        
+        .timestamp {
+            color: #888;
+            font-size: 0.8em;
+        }
+        
+        .ip-address {
+            color: #00aaff;
+            font-weight: bold;
+        }
+        
+        .log-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .detail-section {
+            background: #0f0f0f;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        
+        .detail-section h4 {
+            color: #00ff00;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        
+        .detail-item {
+            margin-bottom: 5px;
+            font-size: 0.85em;
+        }
+        
+        .detail-label {
+            color: #888;
+            font-weight: bold;
+        }
+        
+        .detail-value {
+            color: #fff;
+            word-break: break-all;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .page-link {
+            color: #00ff00;
+            text-decoration: none;
+            padding: 8px 12px;
+            border: 1px solid #00ff00;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .page-link:hover,
+        .page-link.active {
+            background: #00ff00;
+            color: #000;
+        }
+        
+        .btn {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-family: inherit;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            background: #00cc00;
+        }
+        
+        .btn-danger {
+            background: #ff4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #cc0000;
+        }
+        
+        .json-view {
+            background: #0f0f0f;
+            border: 1px solid #333;
+            border-radius: 3px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .user-agent {
+            color: #ffaa00;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .log-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .log-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Request Logs</h1>
+            <p>Detailed request analysis and monitoring</p>
+        </div>
+        
+        <div class="nav-links">
+            <a href="/" class="nav-link">Dashboard</a>
+            <a href="/logs" class="nav-link">View Logs</a>
+            <a href="/upload" class="nav-link">Upload Files</a>
+            <a href="/health" class="nav-link">Health Check</a>
+        </div>
+        
+        <div class="stats-bar">
+            <div>
+                <strong>Total Requests:</strong> {{ total_requests }} | 
+                <strong>Page:</strong> {{ page }} of {{ total_pages }}
+            </div>
+            <form action="/clear-logs" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Clear all logs?')">
+                    Clear All Logs
+                </button>
+            </form>
+        </div>
+        
+        {% if logs %}
+            {% for log in logs %}
+            <div class="log-entry">
+                <div class="log-header">
+                    <div>
+                        <span class="method {{ log.method.lower() }}">{{ log.method }}</span>
+                        <span style="margin-left: 10px; color: #fff;">{{ log.path }}</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="timestamp">{{ log.timestamp[:19] }}</div>
+                        <div class="ip-address">{{ log.remote_addr }}</div>
+                    </div>
+                </div>
+                
+                <div class="log-details">
+                    <div class="detail-section">
+                        <h4>📋 Request Details</h4>
+                        <div class="detail-item">
+                            <span class="detail-label">URL:</span>
+                            <div class="detail-value">{{ log.url }}</div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">User-Agent:</span>
+                            <div class="detail-value user-agent">{{ log.user_agent }}</div>
+                        </div>
+                        {% if log.referrer %}
+                        <div class="detail-item">
+                            <span class="detail-label">Referrer:</span>
+                            <div class="detail-value">{{ log.referrer }}</div>
+                        </div>
+                        {% endif %}
+                        {% if log.content_type %}
+                        <div class="detail-item">
+                            <span class="detail-label">Content-Type:</span>
+                            <div class="detail-value">{{ log.content_type }}</div>
+                        </div>
+                        {% endif %}
+                        {% if log.content_length %}
+                        <div class="detail-item">
+                            <span class="detail-label">Content-Length:</span>
+                            <div class="detail-value">{{ log.content_length }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h4>🔍 Parameters & Data</h4>
+                        {% if log.args %}
+                        <div class="detail-item">
+                            <span class="detail-label">Query Args:</span>
+                            <div class="json-view">{{ log.args | tojson(indent=2) }}</div>
+                        </div>
+                        {% endif %}
+                        {% if log.form_data %}
+                        <div class="detail-item">
+                            <span class="detail-label">Form Data:</span>
+                            <div class="json-view">{{ log.form_data | tojson(indent=2) }}</div>
+                        </div>
+                        {% endif %}
+                        {% if log.body %}
+                        <div class="detail-item">
+                            <span class="detail-label">Request Body:</span>
+                            <div class="json-view">{{ log.body }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div class="pagination">
+                {% if page > 1 %}
+                    <a href="?page={{ page - 1 }}" class="page-link">← Previous</a>
+                {% endif %}
+                
+                {% for p in range(1, total_pages + 1) %}
+                    {% if p == page %}
+                        <span class="page-link active">{{ p }}</span>
+                    {% elif p <= 3 or p > total_pages - 3 or (p >= page - 2 and p <= page + 2) %}
+                        <a href="?page={{ p }}" class="page-link">{{ p }}</a>
+                    {% elif p == 4 and page > 6 %}
+                        <span style="color: #666;">...</span>
+                    {% elif p == total_pages - 3 and page < total_pages - 5 %}
+                        <span style="color: #666;">...</span>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if page < total_pages %}
+                    <a href="?page={{ page + 1 }}" class="page-link">Next →</a>
+                {% endif %}
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 40px; color: #666;">
+                <h3>No requests logged yet</h3>
+                <p>Start making requests to see them appear here.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

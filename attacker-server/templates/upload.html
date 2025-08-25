@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files - Web Attacker Server</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            color: #00ff00;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #00ff00;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #00ff00;
+            color: #000;
+        }
+        
+        .upload-section {
+            background: #1a1a1a;
+            border: 2px dashed #00ff00;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+        
+        .upload-section.dragover {
+            background: #1a2a1a;
+            border-color: #00cc00;
+            transform: scale(1.02);
+        }
+        
+        .upload-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #00ff00;
+        }
+        
+        .upload-text {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .upload-hint {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .btn {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #00cc00;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+        
+        .btn-secondary:hover {
+            background: #00ff00;
+            color: #000;
+        }
+        
+        .file-list {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .file-list h3 {
+            color: #00ff00;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #333;
+            margin-bottom: 10px;
+            border-radius: 3px;
+            background: #0f0f0f;
+        }
+        
+        .file-info {
+            flex: 1;
+        }
+        
+        .file-name {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        
+        .file-meta {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #00ff00;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .message.success {
+            background: #1a2a1a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+        }
+        
+        .message.error {
+            background: #2a1a1a;
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .upload-section {
+                padding: 20px;
+            }
+            
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📤 Upload Files</h1>
+            <p>Host exploit files and payloads for your pentesting lab</p>
+        </div>
+        
+        <div class="nav-links">
+            <a href="/" class="nav-link">Dashboard</a>
+            <a href="/logs" class="nav-link">View Logs</a>
+            <a href="/upload" class="nav-link">Upload Files</a>
+            <a href="/health" class="nav-link">Health Check</a>
+        </div>
+        
+        <div class="upload-section" id="uploadArea">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">Drag & Drop files here or click to browse</div>
+            <div class="upload-hint">Maximum file size: 16MB</div>
+            <input type="file" id="fileInput" class="file-input" multiple>
+            <button class="btn" onclick="document.getElementById('fileInput').click()">
+                Choose Files
+            </button>
+        </div>
+        
+        <div id="messageArea"></div>
+        
+        <div class="file-list">
+            <h3>📋 Recently Uploaded Files</h3>
+            <div id="fileList">
+                <p style="color: #666; text-align: center;">No files uploaded yet</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const messageArea = document.getElementById('messageArea');
+        const fileList = document.getElementById('fileList');
+        
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+        
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                uploadFile(file);
+            });
+        }
+        
+        function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            // Create progress bar
+            const progressDiv = document.createElement('div');
+            progressDiv.innerHTML = `
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-meta">Uploading...</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            fileList.appendChild(progressDiv);
+            
+            const xhr = new XMLHttpRequest();
+            
+            xhr.upload.addEventListener('progress', (e) => {
+                if (e.lengthComputable) {
+                    const percentComplete = (e.loaded / e.total) * 100;
+                    const progressFill = progressDiv.querySelector('.progress-fill');
+                    progressFill.style.width = percentComplete + '%';
+                }
+            });
+            
+            xhr.addEventListener('load', () => {
+                if (xhr.status === 200) {
+                    showMessage('File uploaded successfully!', 'success');
+                    progressDiv.querySelector('.file-meta').textContent = 'Upload complete';
+                    progressDiv.querySelector('.progress-fill').style.background = '#00ff00';
+                    
+                    // Refresh file list after a short delay
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    showMessage('Upload failed: ' + xhr.responseText, 'error');
+                    progressDiv.querySelector('.file-meta').textContent = 'Upload failed';
+                    progressDiv.querySelector('.progress-fill').style.background = '#ff4444';
+                }
+            });
+            
+            xhr.addEventListener('error', () => {
+                showMessage('Upload failed: Network error', 'error');
+                progressDiv.querySelector('.file-meta').textContent = 'Upload failed';
+                progressDiv.querySelector('.progress-fill').style.background = '#ff4444';
+            });
+            
+            xhr.open('POST', '/upload');
+            xhr.send(formData);
+        }
+        
+        function showMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = text;
+            messageArea.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+        
+        // Load existing files on page load
+        window.addEventListener('load', () => {
+            fetch('/')
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const files = doc.querySelectorAll('.file-item');
+                    
+                    if (files.length > 0) {
+                        fileList.innerHTML = '';
+                        files.forEach(file => {
+                            fileList.appendChild(file.cloneNode(true));
+                        });
+                    }
+                })
+                .catch(error => console.error('Error loading files:', error));
+        });
+    </script>
+</body>
+</html>

