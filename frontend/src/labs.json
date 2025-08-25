@@ -1,0 +1,34 @@
+{
+  "levels": [
+    {
+      "name": "level-01",
+      "description": "Basic vulnerability labs for beginners",
+      "labs": [
+        {
+          "name": "cve-2014-6271",
+          "vulnerability": "Shellshock",
+          "description": "System status monitoring application with CGI",
+          "port": 8080,
+          "objective": "Obtain remote code execution via Shellshock vulnerability",
+          "category": "Command Injection"
+        },
+        {
+          "name": "jwt-1",
+          "vulnerability": "JWT Algorithm Confusion",
+          "description": "Secure web application with JWT authentication",
+          "port": 8080,
+          "objective": "Bypass authentication to gain admin access via JWT manipulation",
+          "category": "Authentication Bypass"
+        },
+        {
+          "name": "sqli-1",
+          "vulnerability": "SQL Injection",
+          "description": "News portal application with database vulnerabilities",
+          "port": 8080,
+          "objective": "Exploit SQL injection to gain admin access and execute commands",
+          "category": "SQL Injection"
+        }
+      ]
+    }
+  ]
+}

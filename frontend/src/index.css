@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+* {
+  border-color: #e2e8f0;
+}
+
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.dark body {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+.dark * {
+  border-color: #334155;
+}
