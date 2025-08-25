@@ -83,6 +83,26 @@ function App() {
 
     initializeLabs();
     
+    // Set up periodic refresh of lab statuses
+    const labStatusInterval = setInterval(async () => {
+      try {
+        const updatedLabs = await refreshLabsStatus(labs);
+        setLabs(updatedLabs);
+        
+        // Update levels with refreshed lab data
+        setLevels(prevLevels =>
+          prevLevels.map(level => ({
+            ...level,
+            labs: level.labs.map(lab => 
+              updatedLabs.find(updatedLab => updatedLab.id === lab.id) || lab
+            )
+          }))
+        );
+      } catch (error) {
+        console.warn('Failed to refresh lab statuses:', error);
+      }
+    }, 5000); // Check every 5 seconds
+    
     // Set up periodic refresh of attacker server status
     const statusInterval = setInterval(async () => {
       try {
@@ -94,7 +114,10 @@ function App() {
       }
     }, 10000); // Check every 10 seconds
 
-    return () => clearInterval(statusInterval);
+    return () => {
+      clearInterval(labStatusInterval);
+      clearInterval(statusInterval);
+    };
   }, []);
 
   const handleStatusChange = (labId: string, status: 'running' | 'stopped') => {

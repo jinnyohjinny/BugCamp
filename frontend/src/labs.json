@@ -16,7 +16,7 @@
           "name": "jwt-1",
           "vulnerability": "JWT Algorithm Confusion",
           "description": "Secure web application with JWT authentication",
-          "port": 8080,
+          "port": 8081,
           "objective": "Bypass authentication to gain admin access via JWT manipulation",
           "category": "Authentication Bypass"
         },
@@ -24,7 +24,7 @@
           "name": "sqli-1",
           "vulnerability": "SQL Injection",
           "description": "News portal application with database vulnerabilities",
-          "port": 8080,
+          "port": 8082,
           "objective": "Exploit SQL injection to gain admin access and execute commands",
           "category": "SQL Injection"
         }
