@@ -1,0 +1,18 @@
+services:
+  sqli-1:
+    build: .
+    container_name: sqli-1-lab
+    ports:
+      - "8082:3000"
+    networks:
+      - labnet
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sqli-1.rule=Host(`sqli-1.local`)"
+      - "traefik.http.services.sqli-1.loadbalancer.server.port=3000"
+
+networks:
+  labnet:
+    external: true
+    name: labnet
