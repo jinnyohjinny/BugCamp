@@ -240,7 +240,7 @@ function App() {
                 )}
               </div>
               <a
-                href="http://localhost:8085"
+                href="https://github.com/jinnyohjinny/BugCamp"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
