@@ -1,0 +1,49 @@
+{
+  "name": "bugcamp",
+  "version": "1.0.0",
+  "description": "BugCamp - Vulnerability Training Platform",
+  "main": "api-server.js",
+  "scripts": {
+    "start": "node api-server.js",
+    "dev": "nodemon api-server.js",
+    "frontend": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "frontend:install": "cd frontend && npm install",
+    "install:all": "npm install && npm run frontend:install",
+    "start:all": "concurrently \"npm start\" \"npm run frontend\"",
+    "dev:all": "concurrently \"npm run dev\" \"npm run frontend\"",
+    "clean": "make clean",
+    "status": "make status",
+    "list": "make list"
+  },
+  "keywords": [
+    "bugcamp",
+    "vulnerability",
+    "training",
+    "ethical-hacking",
+    "docker",
+    "labs"
+  ],
+  "author": "BugCamp Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.10"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jinnyohjinny/BugCamp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jinnyohjinny/BugCamp/issues"
+  },
+  "homepage": "https://github.com/jinnyohjinny/BugCamp#readme"
+}
