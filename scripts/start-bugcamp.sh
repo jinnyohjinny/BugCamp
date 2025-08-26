@@ -60,7 +60,7 @@ echo "🎉 BugCamp is starting up!"
 echo ""
 echo "📱 Frontend: http://localhost:5173"
 echo "🔧 API Server: http://localhost:3001"
-echo "🐳 Attacker Server: http://localhost:8085 (when labs are deployed)"
+echo "🐳 Attacker Server: http://localhost:6969 (when labs are deployed)"
 echo ""
 echo "Press Ctrl+C to stop all services"
 
