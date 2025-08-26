@@ -1,17 +1,46 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { HashRouter as Router, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Bug, Github, ExternalLink, AlertTriangle } from 'lucide-react';
 import { ProgressBar } from './components/ProgressBar';
-import { LevelSection } from './components/LevelSection';
+import { Navigation } from './components/Navigation';
+import { LevelView } from './components/LevelView';
 import type { Lab, Level } from './types/lab';
 import { refreshLabsStatus, getAttackerServerStatus } from './lib/api';
 import labsData from './labs.json';
 
-function App() {
+// Custom hook for hash-based navigation
+function useHashNavigation() {
+  const location = useLocation();
+  const [currentLevel, setCurrentLevel] = useState('level-01');
+  
+  useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    if (hash && labsData.levels.some(level => level.name === hash)) {
+      setCurrentLevel(hash);
+    } else if (!hash) {
+      // Set default level if no hash
+      setCurrentLevel('level-01');
+      window.location.hash = 'level-01';
+    }
+  }, [location.hash]);
+  
+  const navigate = (levelName: string) => {
+    setCurrentLevel(levelName);
+    window.location.hash = levelName;
+  };
+  
+  return { currentLevel, navigate };
+}
+
+// Main App Component
+function AppContent() {
   const [labs, setLabs] = useState<Lab[]>([]);
   const [levels, setLevels] = useState<Level[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [attackerServerStatus, setAttackerServerStatus] = useState<'running' | 'stopped'>('stopped');
+  
+  const { currentLevel, navigate } = useHashNavigation();
 
   useEffect(() => {
     const initializeLabs = async () => {
@@ -176,6 +205,9 @@ function App() {
     );
   }
 
+  // Find the current level
+  const currentLevelData = levels.find(level => level.name === currentLevel) || levels[0];
+
   return (
     <div className="min-h-screen bg-black">
       {/* Header */}
@@ -248,22 +280,34 @@ function App() {
         </div>
       </motion.header>
 
+      {/* Navigation */}
+      <Navigation 
+        levels={levels}
+        currentLevel={currentLevel}
+        onLevelChange={navigate}
+      />
+
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <ProgressBar completed={completedLabs} total={totalLabs} />
         
-        <div className="space-y-12">
-          {levels.map((level) => (
-            <LevelSection
-              key={level.name}
-              levelName={level.name}
-              levelDescription={level.description}
-              labs={level.labs}
-              onStatusChange={handleStatusChange}
-              onHackedChange={handleHackedChange}
-            />
-          ))}
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentLevel}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {currentLevelData && (
+              <LevelView
+                level={currentLevelData}
+                onStatusChange={handleStatusChange}
+                onHackedChange={handleHackedChange}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       {/* Footer */}
@@ -285,6 +329,15 @@ function App() {
         </div>
       </motion.footer>
     </div>
+  );
+}
+
+// Router Wrapper
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 

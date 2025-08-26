@@ -1,104 +1,155 @@
 # BugCamp Frontend
 
-A modern React frontend for the BugCamp vulnerability training platform.
+A modern, responsive Single Page Application (SPA) for the BugCamp vulnerability training platform.
 
 ## Features
 
-- **Modern UI**: Built with React, TypeScript, Tailwind CSS, and shadcn/ui
-- **Responsive Design**: Works seamlessly on desktop and mobile
-- **Smooth Animations**: Enhanced with Framer Motion
-- **Lab Management**: Deploy/destroy labs with real-time status updates
-- **Progress Tracking**: Visual progress bar and completion tracking
-- **Local Storage**: Persists "hacked" status across sessions
+### 🚀 SPA Navigation System
+- **Client-side routing** using React Router with hash-based navigation
+- **Hash-based URLs** (e.g., `#level-01`, `#level-02`) for bookmarkable and shareable links
+- **No page reloads** when switching between levels or sections
+- **Smooth transitions** between different views using Framer Motion
 
-## Tech Stack
+### 🎨 Modern UI/UX
+- **Responsive design** that works on desktop, tablet, and mobile devices
+- **Clean card-based layout** for lab content using Tailwind CSS
+- **Smooth animations** and micro-interactions throughout the interface
+- **Dark theme** optimized for security professionals
+
+### 📱 Responsive Navigation
+- **Desktop**: Full tab navigation with previous/next buttons and progress indicators
+- **Mobile**: Compact navigation with level pills and swipe-friendly controls
+- **Sticky navigation** that stays visible while scrolling
+- **Progress tracking** showing current level and completion status
+
+### 🔧 Lab Management
+- **Dynamic content loading** from `labs.json`
+- **Real-time status updates** for running/stopped labs
+- **Progress tracking** with completion indicators
+- **Local storage persistence** for completed labs
+
+### 🎯 Key Components
+
+#### Navigation Component
+- Tab-style navigation between levels
+- Previous/next navigation buttons
+- Progress indicators and level counters
+- Responsive design for mobile and desktop
+
+#### LevelView Component
+- Individual level display with labs grid
+- Lab cards with vulnerability information
+- Start/stop controls for lab instances
+- Completion tracking and progress bars
+
+#### ProgressBar Component
+- Overall progress across all levels
+- Visual progress bar with animations
+- Completion statistics
+
+## Technical Stack
 
 - **React 19** with TypeScript
+- **React Router** for client-side routing
+- **Framer Motion** for smooth animations
+- **Tailwind CSS** for responsive styling
 - **Vite** for fast development and building
-- **Tailwind CSS** for styling
-- **shadcn/ui** for UI components
-- **Framer Motion** for animations
-- **Lucide React** for icons
 
 ## Getting Started
 
 ### Prerequisites
-
-- Node.js 18+ and npm
-- Backend API server running on port 3001 (optional for full functionality)
+- Node.js 18+ 
+- npm or yarn
 
 ### Installation
+```bash
+cd frontend
+npm install
+```
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-4. Open your browser to [http://localhost:5173](http://localhost:5173)
+### Development
+```bash
+npm run dev
+```
 
 ### Building for Production
-
 ```bash
 npm run build
 ```
 
-The built files will be in the `dist` directory.
+## Project Structure
 
-## API Integration
-
-The frontend expects a backend API server running on `http://localhost:3001` with the following endpoints:
-
-- `POST /api/make` - Deploy/destroy labs (with command and labId in body)
-- `GET /api/status?lab=<lab-id>` - Get lab status
-
-**Note**: Lab deployment can take several minutes for Docker image building. The API has a 10-minute timeout, but deployments continue running in the background. If you get a timeout error, wait a few minutes and check the status.
-
-If the API is not available, the frontend will still work but deploy/destroy functionality will show errors.
-
-## Components
-
-- **ProgressBar**: Shows overall completion progress
-- **LabCard**: Individual lab cards with deploy/destroy buttons and hacked checkbox
-- **LevelSection**: Groups labs by level with completion stats
-- **App**: Main application component with header and layout
-
-## Data Format
-
-The frontend loads lab data from `src/labs.json` with the following structure:
-
-```json
-{
-  "levels": [
-    {
-      "name": "level-01",
-      "description": "Basic vulnerability labs",
-      "labs": [
-        {
-          "name": "jwt-1",
-          "vulnerability": "JWT Algorithm Confusion",
-          "description": "Lab description",
-          "port": 8080,
-          "objective": "Lab objective",
-          "category": "Authentication"
-        }
-      ]
-    }
-  ]
-}
+```
+src/
+├── components/
+│   ├── Navigation.tsx      # Main navigation component
+│   ├── LevelView.tsx       # Individual level display
+│   ├── ProgressBar.tsx     # Progress tracking
+│   └── ...
+├── types/
+│   └── lab.ts             # TypeScript interfaces
+├── lib/
+│   └── api.ts             # API utilities
+├── App.tsx                # Main application with routing
+└── main.tsx               # Application entry point
 ```
 
-## Local Storage
+## Navigation System
 
-The app uses localStorage to persist which labs have been marked as "hacked":
-- Key: `bugcamp-hacked-labs`
-- Value: Array of lab IDs that have been completed
+### Hash-Based Routing
+The application uses hash-based routing for seamless navigation:
+- `#level-01` - Level 1 labs
+- `#level-02` - Level 2 labs
+- URLs can be bookmarked and shared directly
+
+### Responsive Design
+- **Desktop**: Full tab navigation with all levels visible
+- **Mobile**: Compact navigation with level indicators
+- **Tablet**: Adaptive layout that scales appropriately
+
+### Smooth Transitions
+- Page transitions use Framer Motion for smooth animations
+- Content fades in/out with directional movement
+- Navigation elements animate smoothly between states
+
+## Customization
+
+### Adding New Levels
+1. Update `labs.json` with new level data
+2. The navigation system automatically adapts
+3. Hash routing works immediately for new levels
+
+### Styling
+- Uses Tailwind CSS utility classes
+- Custom CSS in `index.css` for specific utilities
+- Responsive breakpoints: `sm:`, `md:`, `lg:`, `xl:`
+
+### Animations
+- Framer Motion variants for consistent animations
+- Staggered animations for list items
+- Hover and tap animations for interactive elements
+
+## Browser Support
+
+- Modern browsers with ES6+ support
+- Chrome, Firefox, Safari, Edge
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## Performance Features
+
+- **Code splitting** with Vite
+- **Optimized builds** for production
+- **Efficient re-renders** with React 19
+- **Smooth animations** with Framer Motion
+
+## Contributing
+
+1. Follow the existing code structure
+2. Use TypeScript for type safety
+3. Implement responsive design patterns
+4. Add smooth animations for new features
+5. Test on multiple screen sizes
+
+## License
+
+This project is part of BugCamp, a vulnerability training platform.
