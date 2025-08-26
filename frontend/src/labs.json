@@ -37,6 +37,20 @@
           "category": "Deserialization"
         }
       ]
+    },
+    {
+      "name": "level-02",
+      "description": "Intermediate vulnerability labs for experienced users",
+      "labs": [
+        {
+          "name": "cve-2016-10033",
+          "vulnerability": "PHPMailer Command Injection",
+          "description": "Professional contact form application with email functionality",
+          "port": 8084,
+          "objective": "Exploit PHPMailer vulnerability to achieve remote code execution",
+          "category": "Command Injection"
+        }
+      ]
     }
   ]
 }

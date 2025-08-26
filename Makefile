@@ -35,6 +35,7 @@ help: ## Display available commands and usage information
 	@echo -e "$(GREEN)Lab Management:$(NC)"
 	@echo "  make list          List all available levels"
 	@echo "  make level-01-list List labs within level-01"
+	@echo "  make level-02-list List labs within level-02"
 	@echo "  make <lab-name>    Build and run the specified lab with attacker-server"
 	@echo "  make status        Show status of currently running containers"
 	@echo "  make clean         Stop and remove all lab containers and attacker-server"
@@ -50,7 +51,6 @@ help: ## Display available commands and usage information
 	@echo ""
 	@echo -e "$(GREEN)Examples:$(NC)"
 	@echo "  make list          List all levels"
-	@echo "  make level-01-list List labs in level-01"
 	@echo "  make jwt-i         Run the JWT lab"
 	@echo "  make cve-2014-6271 Run the Shellshock lab"
 
@@ -148,8 +148,8 @@ $(ALL_LABS): ## Build and run the specified lab
 	fi
 	
 	# Check if lab directory exists (search in all levels)
-	@if [ ! -d "labs/level-01/$@" ] && [ ! -d "labs/level-00/$@" ]; then \
-		echo -e "$(RED)Error: Lab directory not found in labs/level-01/ or labs/level-00/$(NC)"; \
+	@if [ ! -d "labs/level-01/$@" ] && [ ! -d "labs/level-02/$@" ] && [ ! -d "labs/level-00/$@" ]; then \
+		echo -e "$(RED)Error: Lab directory not found in labs/level-01/, labs/level-02/, or labs/level-00/$(NC)"; \
 		exit 1; \
 	fi
 	
@@ -186,10 +186,12 @@ $(ALL_LABS): ## Build and run the specified lab
 	@echo -e "$(GREEN)Port: $(LAB_PORT)$(NC)"
 	@echo ""
 	
-	# Build and run the lab (try level-01 first, then level-00)
+	# Build and run the lab (try level-01 first, then level-02, then level-00)
 	@echo -e "$(YELLOW)Building and starting lab container...$(NC)"
 	@if [ -d "labs/level-01/$@" ]; then \
 		cd labs/level-01/$@ && docker-compose up -d --build; \
+	elif [ -d "labs/level-02/$@" ]; then \
+		cd labs/level-02/$@ && docker-compose up -d --build; \
 	elif [ -d "labs/level-00/$@" ]; then \
 		cd labs/level-00/$@ && docker-compose up -d --build; \
 	else \
