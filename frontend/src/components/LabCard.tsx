@@ -72,7 +72,7 @@ export function LabCard({ lab, onStatusChange, onHackedChange }: LabCardProps) {
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <CardTitle className="text-xl mb-2 flex items-center gap-2">
-                <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <Shield className="h-5 w-5 text-green-500" />
                 {lab.name}
               </CardTitle>
               <CardDescription className="text-sm mb-2">
@@ -81,8 +81,8 @@ export function LabCard({ lab, onStatusChange, onHackedChange }: LabCardProps) {
             </div>
             <div className={`px-2 py-1 rounded-full text-xs font-medium ${
               lab.status === 'running' 
-                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100'
-                : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100'
+                ? 'bg-green-900 text-green-100'
+                : 'bg-gray-800 text-gray-300'
             }`}>
               {lab.status === 'running' ? 'Running' : 'Stopped'}
             </div>
@@ -90,27 +90,27 @@ export function LabCard({ lab, onStatusChange, onHackedChange }: LabCardProps) {
           
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-2">
-              <Target className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-              <span className="text-gray-600 dark:text-gray-400">Vulnerability:</span>
-              <span className="font-medium text-gray-900 dark:text-gray-100">{lab.vulnerability}</span>
+              <Target className="h-4 w-4 text-gray-400" />
+              <span className="text-gray-400">Vulnerability:</span>
+              <span className="font-medium text-gray-200">{lab.vulnerability}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-gray-600 dark:text-gray-400">Category:</span>
-              <span className="px-2 py-1 bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 rounded text-xs">
+              <span className="text-gray-400">Category:</span>
+              <span className="px-2 py-1 bg-gray-800 text-gray-200 rounded text-xs">
                 {lab.category}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-gray-600 dark:text-gray-400">Port:</span>
+              <span className="text-gray-400">Port:</span>
               <span className="font-mono text-sm">{lab.port}</span>
             </div>
           </div>
         </CardHeader>
 
         <CardContent className="flex-1">
-          <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+                          <div className="bg-gray-800 p-3 rounded-lg">
             <p className="text-sm font-medium mb-1">Objective:</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{lab.objective}</p>
+                          <p className="text-sm text-gray-400">{lab.objective}</p>
           </div>
           
           {error && (

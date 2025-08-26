@@ -17,10 +17,10 @@ export function ProgressBar({ completed, total }: ProgressBarProps) {
       transition={{ duration: 0.5 }}
     >
       <div className="flex justify-between items-center mb-2">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <h2 className="text-lg font-semibold text-green-500">
           Progress
         </h2>
-        <span className="text-sm text-gray-600 dark:text-gray-400">
+        <span className="text-sm text-gray-400">
           {completed} / {total} labs hacked
         </span>
       </div>
@@ -34,7 +34,7 @@ export function ProgressBar({ completed, total }: ProgressBarProps) {
         animate={{ scale: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+        <span className="text-2xl font-bold text-green-500">
           {Math.round(percentage)}%
         </span>
       </motion.div>

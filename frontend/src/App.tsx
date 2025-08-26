@@ -109,7 +109,7 @@ function App() {
         const status = await getAttackerServerStatus();
         setAttackerServerStatus(status);
       } catch (error) {
-        console.warn('Failed to refresh attacker server status:', error);
+        console.warn('Failed to get attacker server status:', error);
         setAttackerServerStatus('stopped');
       }
     }, 10000); // Check every 10 seconds
@@ -120,13 +120,14 @@ function App() {
     };
   }, []);
 
+  // Add a new useEffect to keep labs state synchronized with levels state
+  useEffect(() => {
+    // Flatten all labs from levels to keep labs state in sync
+    const allLabs = levels.flatMap(level => level.labs);
+    setLabs(allLabs);
+  }, [levels]);
+
   const handleStatusChange = (labId: string, status: 'running' | 'stopped') => {
-    setLabs(prevLabs => 
-      prevLabs.map(lab => 
-        lab.id === labId ? { ...lab, status } : lab
-      )
-    );
-    
     setLevels(prevLevels =>
       prevLevels.map(level => ({
         ...level,
@@ -138,12 +139,6 @@ function App() {
   };
 
   const handleHackedChange = (labId: string, hacked: boolean) => {
-    setLabs(prevLabs => 
-      prevLabs.map(lab => 
-        lab.id === labId ? { ...lab, hacked } : lab
-      )
-    );
-    
     setLevels(prevLevels =>
       prevLevels.map(level => ({
         ...level,
@@ -153,8 +148,9 @@ function App() {
       }))
     );
 
-    // Save to localStorage
-    const updatedLabs = labs.map(lab => 
+    // Save to localStorage - get the current labs from levels
+    const currentLabs = levels.flatMap(level => level.labs);
+    const updatedLabs = currentLabs.map(lab => 
       lab.id === labId ? { ...lab, hacked } : lab
     );
     const hackedLabIds = updatedLabs.filter(lab => lab.hacked).map(lab => lab.id);
@@ -166,25 +162,25 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <motion.div
           className="text-center"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Bug className="h-12 w-12 text-blue-600 dark:text-blue-400 mx-auto mb-4 animate-pulse" />
-          <p className="text-lg text-gray-600 dark:text-gray-400">Loading BugCamp...</p>
+          <Bug className="h-12 w-12 text-green-500 mx-auto mb-4 animate-pulse" />
+          <p className="text-lg text-gray-300">Loading BugCamp...</p>
         </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-black">
       {/* Header */}
       <motion.header 
-        className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700"
+        className="bg-black shadow-sm border-b border-gray-800"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
@@ -197,12 +193,12 @@ function App() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="p-2 bg-blue-600 rounded-lg">
-                <Bug className="h-8 w-8 text-white" />
+              <div className="p-2 bg-green-500 rounded-lg">
+                <Bug className="h-8 w-8 text-black" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">BugCamp</h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <h1 className="text-3xl font-bold text-green-500">BugCamp</h1>
+                <p className="text-sm text-gray-400">
                   Hands-on Vulnerability Training Platform
                 </p>
               </div>
@@ -222,8 +218,8 @@ function App() {
                   onClick={attackerServerStatus === 'stopped' ? (e) => e.preventDefault() : undefined}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors text-sm font-medium ${
                     attackerServerStatus === 'running'
-                      ? 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700'
-                      : 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300 cursor-not-allowed'
+                      ? 'bg-gray-800 hover:bg-gray-700 text-green-500 border border-green-500'
+                      : 'bg-red-900 text-red-300 cursor-not-allowed border border-red-700'
                   }`}
                 >
                   <ExternalLink className="h-4 w-4" />
@@ -243,7 +239,7 @@ function App() {
                 href="https://github.com/jinnyohjinny/BugCamp"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                className="p-2 hover:bg-gray-800 rounded-lg transition-colors text-green-500"
               >
                 <Github className="h-5 w-5" />
               </a>
@@ -272,17 +268,17 @@ function App() {
 
       {/* Footer */}
       <motion.footer 
-        className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-16"
+        className="bg-black border-t border-gray-800 mt-16"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 1 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-gray-400">
               Built for security professionals and ethical hackers
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
+            <p className="text-xs text-gray-500 mt-2">
               Remember: Only test on systems you own or have explicit permission to test
             </p>
           </div>

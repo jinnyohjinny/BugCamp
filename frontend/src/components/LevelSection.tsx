@@ -32,21 +32,21 @@ export function LevelSection({
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2 capitalize">
+          <h2 className="text-3xl font-bold text-green-500 mb-2 capitalize">
             {levelName.replace('-', ' ')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-2">{levelDescription}</p>
+          <p className="text-gray-400 mb-2">{levelDescription}</p>
           <div className="flex items-center gap-4 text-sm">
-            <span className="text-gray-600 dark:text-gray-400">
+            <span className="text-gray-400">
               {labs.length} labs available
             </span>
-            <span className="text-blue-600 dark:text-blue-400 font-medium">
+            <span className="text-green-400 font-medium">
               {completedLabs} completed
             </span>
             <div className={`px-2 py-1 rounded-full text-xs ${
               completedLabs === labs.length && labs.length > 0
-                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100'
-                : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100'
+                ? 'bg-green-900 text-green-100'
+                : 'bg-gray-800 text-gray-300'
             }`}>
               {completedLabs === labs.length && labs.length > 0 ? 'All Complete!' : 'In Progress'}
             </div>
