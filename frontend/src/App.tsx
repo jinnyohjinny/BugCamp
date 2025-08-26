@@ -216,7 +216,7 @@ function App() {
             >
               <div className="relative">
                 <a
-                  href={attackerServerStatus === 'running' ? "http://localhost:8085" : "#"}
+                  href={attackerServerStatus === 'running' ? "http://localhost:6969" : "#"}
                   target={attackerServerStatus === 'running' ? "_blank" : undefined}
                   rel={attackerServerStatus === 'running' ? "noopener noreferrer" : undefined}
                   onClick={attackerServerStatus === 'stopped' ? (e) => e.preventDefault() : undefined}

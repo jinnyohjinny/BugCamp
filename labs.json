@@ -49,6 +49,14 @@
           "port": 8084,
           "objective": "Exploit PHPMailer vulnerability to achieve remote code execution",
           "category": "Command Injection"
+        },
+        {
+          "name": "jwt-2",
+          "vulnerability": "JWT Algorithm Confusion",
+          "description": "Secure enterprise portal with JWT authentication vulnerability",
+          "port": 8085,
+          "objective": "Exploit JWT algorithm confusion to bypass authentication and gain admin access",
+          "category": "Authentication Bypass"
         }
       ]
     }

@@ -1,0 +1,18 @@
+services:
+  jwt-2:
+    build: .
+    container_name: jwt-2-lab
+    ports:
+      - "8085:3000"
+    networks:
+      - labnet
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jwt-2.rule=Host(`jwt-2.local`)"
+      - "traefik.http.services.jwt-2.loadbalancer.server.port=3000"
+
+networks:
+  labnet:
+    external: true
+    name: labnet

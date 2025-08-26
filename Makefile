@@ -202,12 +202,12 @@ $(ALL_LABS): ## Build and run the specified lab
 	# Build and run attacker-server
 	@echo -e "$(YELLOW)Building and starting attacker-server...$(NC)"
 	@cd attacker-server && docker build -t $(ATTACKER_CONTAINER) .
-	@docker run -d --name $(ATTACKER_CONTAINER) --network $(NETWORK_NAME) -p 8085:8080 $(ATTACKER_CONTAINER)
+	@docker run -d --name $(ATTACKER_CONTAINER) --network $(NETWORK_NAME) -p 6969:8080 $(ATTACKER_CONTAINER)
 	
 	@echo ""
 	@echo -e "$(GREEN)Lab '$@' is now running!$(NC)"
 	@echo -e "$(GREEN)Lab accessible at: http://localhost:$(LAB_PORT)$(NC)"
-	@echo -e "$(GREEN)Attacker server accessible at: http://localhost:8085$(NC)"
+	@echo -e "$(GREEN)Attacker server accessible at: http://localhost:6969$(NC)"
 	@echo -e "$(GREEN)Both containers are running on the '$(NETWORK_NAME)' network$(NC)"
 	@echo ""
 	@echo -e "$(BLUE)Use 'make status' to check container status$(NC)"

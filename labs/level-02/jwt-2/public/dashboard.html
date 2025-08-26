@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Enterprise Secure Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1>Enterprise Portal</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/dashboard" class="nav-link active">Dashboard</a>
+                <a href="#" id="logoutBtn" class="nav-link">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h2>Welcome to Your Dashboard</h2>
+                <p>Manage your enterprise portal access and settings</p>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="dashboard-card">
+                    <h3>User Profile</h3>
+                    <div id="userInfo" class="user-info">
+                        <p>Loading user information...</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button id="adminBtn" class="btn btn-secondary" style="display: none;">Access Admin Panel</button>
+                        <button id="profileBtn" class="btn btn-primary">View Profile</button>
+                        <button id="settingsBtn" class="btn btn-secondary">Settings</button>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>System Status</h3>
+                    <div class="status-indicators">
+                        <div class="status-item">
+                            <span class="status-dot status-success"></span>
+                            <span>Authentication: Active</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot status-success"></span>
+                            <span>Session: Valid</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot status-success"></span>
+                            <span>Security: Enabled</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminPanel" class="admin-panel" style="display: none;">
+                <div class="dashboard-card">
+                    <h3>Admin Panel</h3>
+                    <div id="adminContent">
+                        <p>Loading admin content...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Enterprise Solutions Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/api/profile');
+                if (!response.ok) {
+                    window.location.href = '/login';
+                    return;
+                }
+                
+                const user = await response.json();
+                displayUserInfo(user);
+                
+                // Show admin button if user is admin
+                if (user.role === 'admin') {
+                    document.getElementById('adminBtn').style.display = 'inline-block';
+                }
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+                window.location.href = '/login';
+            }
+        });
+
+        function displayUserInfo(user) {
+            const userInfoDiv = document.getElementById('userInfo');
+            userInfoDiv.innerHTML = `
+                <div class="user-detail">
+                    <strong>Username:</strong> ${user.username}
+                </div>
+                <div class="user-detail">
+                    <strong>Role:</strong> ${user.role}
+                </div>
+                <div class="user-detail">
+                    <strong>User ID:</strong> ${user.userId}
+                </div>
+            `;
+        }
+
+        // Admin panel access
+        document.getElementById('adminBtn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/admin');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('adminContent').innerHTML = `
+                        <div class="admin-success">
+                            <h4>${data.message}</h4>
+                            <div class="flag-display">
+                                <strong>Flag:</strong> ${data.flag}
+                            </div>
+                            <div class="user-details">
+                                <strong>User:</strong> ${data.user.username} (${data.user.role})
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('adminPanel').style.display = 'block';
+                } else {
+                    const errorData = await response.json();
+                    alert('Access denied: ' + errorData.error);
+                }
+            } catch (error) {
+                console.error('Error accessing admin panel:', error);
+                alert('Error accessing admin panel');
+            }
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await fetch('/api/logout', { method: 'POST' });
+                window.location.href = '/';
+            } catch (error) {
+                console.error('Error during logout:', error);
+                window.location.href = '/';
+            }
+        });
+
+        // Profile button
+        document.getElementById('profileBtn').addEventListener('click', () => {
+            alert('Profile functionality coming soon!');
+        });
+
+        // Settings button
+        document.getElementById('settingsBtn').addEventListener('click', () => {
+            alert('Settings functionality coming soon!');
+        });
+    </script>
+</body>
+</html>
