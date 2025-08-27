@@ -3,7 +3,7 @@ services:
     build: .
     container_name: pickle-lab
     ports:
-      - "8083:5000"
+      - "9014:5000"
     networks:
       - labnet
     restart: unless-stopped

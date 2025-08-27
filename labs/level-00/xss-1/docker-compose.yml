@@ -5,7 +5,7 @@ services:
     build: .
     container_name: xss-1-lab
     ports:
-      - "8087:8080"
+      - "9001:8080"
     networks:
       - labnet
     environment:
