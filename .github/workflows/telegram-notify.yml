@@ -1,0 +1,26 @@
+name: Telegram Notification on Commit
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram Message
+        uses: appleboy/telegram-action@v0.0.9
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            🚀 New commit pushed to ${{ github.repository }}
+            
+            📝 Commit: ${{ github.event.head_commit.message }}
+            👤 Author: ${{ github.event.head_commit.author.name }}
+            🔗 Branch: ${{ github.ref_name }}
+            📅 Time: ${{ github.event.head_commit.timestamp }}
+            
+            🔍 View: ${{ github.event.head_commit.url }}
