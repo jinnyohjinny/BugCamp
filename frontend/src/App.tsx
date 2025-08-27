@@ -5,6 +5,7 @@ import { Bug, Github, ExternalLink, AlertTriangle } from 'lucide-react';
 import { ProgressBar } from './components/ProgressBar';
 import { Navigation } from './components/Navigation';
 import { LevelView } from './components/LevelView';
+import { AllLabsView } from './components/AllLabsView';
 import type { Lab, Level } from './types/lab';
 import { refreshLabsStatus, getAttackerServerStatus } from './lib/api';
 import labsData from './labs.json';
@@ -12,16 +13,16 @@ import labsData from './labs.json';
 // Custom hook for hash-based navigation
 function useHashNavigation() {
   const location = useLocation();
-  const [currentLevel, setCurrentLevel] = useState('level-01');
+  const [currentLevel, setCurrentLevel] = useState('all-labs');
   
   useEffect(() => {
     const hash = location.hash.replace('#', '');
-    if (hash && labsData.levels.some(level => level.name === hash)) {
+    if (hash && (hash === 'all-labs' || labsData.levels.some(level => level.name === hash))) {
       setCurrentLevel(hash);
     } else if (!hash) {
-      // Set default level if no hash
-      setCurrentLevel('level-01');
-      window.location.hash = 'level-01';
+      // Set default level to all-labs if no hash
+      setCurrentLevel('all-labs');
+      window.location.hash = 'all-labs';
     }
   }, [location.hash]);
   
@@ -205,8 +206,8 @@ function AppContent() {
     );
   }
 
-  // Find the current level
-  const currentLevelData = levels.find(level => level.name === currentLevel) || levels[0];
+  // Find the current level or show all labs
+  const currentLevelData = currentLevel === 'all-labs' ? null : levels.find(level => level.name === currentLevel);
 
   return (
     <div className="min-h-screen bg-black">
@@ -299,13 +300,19 @@ function AppContent() {
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
           >
-            {currentLevelData && (
+            {currentLevel === 'all-labs' ? (
+              <AllLabsView
+                levels={levels}
+                onStatusChange={handleStatusChange}
+                onHackedChange={handleHackedChange}
+              />
+            ) : currentLevelData ? (
               <LevelView
                 level={currentLevelData}
                 onStatusChange={handleStatusChange}
                 onHackedChange={handleHackedChange}
               />
-            )}
+            ) : null}
           </motion.div>
         </AnimatePresence>
       </main>

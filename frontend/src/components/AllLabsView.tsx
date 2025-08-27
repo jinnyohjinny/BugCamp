@@ -1,36 +1,59 @@
 import { motion } from 'framer-motion';
-import { Play, Square, CheckCircle, ExternalLink, Search, Filter } from 'lucide-react';
+import { Play, Square, CheckCircle, ExternalLink, Search, Filter, Grid3X3, Layers } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import type { Level } from '../types/lab';
 
-interface LevelViewProps {
-  level: Level;
+interface AllLabsViewProps {
+  levels: Level[];
   onStatusChange: (labId: string, status: 'running' | 'stopped') => void;
   onHackedChange: (labId: string, hacked: boolean) => void;
 }
 
-export function LevelView({ level, onStatusChange, onHackedChange }: LevelViewProps) {
+export function AllLabsView({ levels, onStatusChange, onHackedChange }: AllLabsViewProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState<string>('all');
+  const [filterLevel, setFilterLevel] = useState<string>('all');
 
-  // Get unique categories for filtering
+  // Get all labs from all levels
+  const allLabs = useMemo(() => {
+    return levels.flatMap(level => 
+      level.labs.map(lab => ({
+        ...lab,
+        levelName: level.name,
+        levelDescription: level.description
+      }))
+    );
+  }, [levels]);
+
+  // Get unique categories and levels for filtering
   const categories = useMemo(() => {
-    const cats = [...new Set(level.labs.map(lab => lab.category))];
+    const cats = [...new Set(allLabs.map(lab => lab.category))];
     return ['all', ...cats];
-  }, [level.labs]);
+  }, [allLabs]);
 
-  // Filter labs based on search and category
+  const levelOptions = useMemo(() => {
+    const levelOpts = levels.map(level => ({
+      value: level.name,
+      label: level.name.replace('level-', 'Level '),
+      description: level.description
+    }));
+    return [{ value: 'all', label: 'All Levels', description: 'Show labs from all levels' }, ...levelOpts];
+  }, [levels]);
+
+  // Filter labs based on search, category, and level
   const filteredLabs = useMemo(() => {
-    return level.labs.filter(lab => {
+    return allLabs.filter(lab => {
       const matchesSearch = lab.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            lab.vulnerability.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           lab.description.toLowerCase().includes(searchTerm.toLowerCase());
+                           lab.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           lab.objective.toLowerCase().includes(searchTerm.toLowerCase());
       
       const matchesCategory = filterCategory === 'all' || lab.category === filterCategory;
+      const matchesLevel = filterLevel === 'all' || lab.levelName === filterLevel;
       
-      return matchesSearch && matchesCategory;
+      return matchesSearch && matchesCategory && matchesLevel;
     });
-  }, [level.labs, searchTerm, filterCategory]);
+  }, [allLabs, searchTerm, filterCategory, filterLevel]);
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -49,6 +72,10 @@ export function LevelView({ level, onStatusChange, onHackedChange }: LevelViewPr
     visible: { opacity: 1, y: 0 }
   };
 
+  const totalLabs = allLabs.length;
+  const completedLabs = allLabs.filter(lab => lab.hacked).length;
+  const runningLabs = allLabs.filter(lab => lab.status === 'running').length;
+
   return (
     <motion.div
       className="space-y-6"
@@ -56,27 +83,39 @@ export function LevelView({ level, onStatusChange, onHackedChange }: LevelViewPr
       initial="hidden"
       animate="visible"
     >
-      {/* Level Header */}
+      {/* Header */}
       <motion.div 
         className="text-center space-y-4"
         variants={itemVariants}
       >
-        <h1 className="text-4xl md:text-5xl font-bold text-green-500">
-          {level.name.replace('level-', 'Level ')}
-        </h1>
+        <div className="flex items-center justify-center space-x-3">
+          <div className="p-3 bg-green-500 rounded-lg">
+            <Grid3X3 className="h-8 w-8 text-black" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-green-500">
+            All Labs
+          </h1>
+        </div>
         <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-          {level.description}
+          Comprehensive view of all vulnerability labs across all levels
         </p>
-        <div className="flex items-center justify-center space-x-4 text-sm text-gray-400">
-          <span>{level.labs.length} labs</span>
+        <div className="flex items-center justify-center space-x-6 text-sm text-gray-400">
+          <span className="flex items-center space-x-2">
+            <Layers className="h-4 w-4" />
+            <span>{levels.length} levels</span>
+          </span>
           <span>•</span>
-          <span>{level.labs.filter(lab => lab.hacked).length} completed</span>
+          <span>{totalLabs} total labs</span>
+          <span>•</span>
+          <span className="text-green-400">{completedLabs} completed</span>
+          <span>•</span>
+          <span className="text-blue-400">{runningLabs} running</span>
         </div>
       </motion.div>
 
       {/* Search and Filter Controls */}
       <motion.div 
-        className="flex flex-col sm:flex-row gap-4 items-center justify-center"
+        className="flex flex-col lg:flex-row gap-4 items-center justify-center"
         variants={itemVariants}
       >
         {/* Search Input */}
@@ -84,7 +123,7 @@ export function LevelView({ level, onStatusChange, onHackedChange }: LevelViewPr
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           <input
             type="text"
-            placeholder="Search labs..."
+            placeholder="Search all labs..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -106,16 +145,32 @@ export function LevelView({ level, onStatusChange, onHackedChange }: LevelViewPr
             ))}
           </select>
         </div>
+
+        {/* Level Filter */}
+        <div className="relative">
+          <Layers className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <select
+            value={filterLevel}
+            onChange={(e) => setFilterLevel(e.target.value)}
+            className="pl-10 pr-8 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none cursor-pointer"
+          >
+            {levelOptions.map(level => (
+              <option key={level.value} value={level.value}>
+                {level.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </motion.div>
 
       {/* Results Count */}
-      {searchTerm || filterCategory !== 'all' ? (
+      {(searchTerm || filterCategory !== 'all' || filterLevel !== 'all') ? (
         <motion.div 
           className="text-center text-gray-400"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          Showing {filteredLabs.length} of {level.labs.length} labs
+          Showing {filteredLabs.length} of {totalLabs} labs
         </motion.div>
       ) : null}
 
@@ -135,13 +190,10 @@ export function LevelView({ level, onStatusChange, onHackedChange }: LevelViewPr
             {/* Lab Header */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-semibold text-white mb-2 leading-tight">
-                  {lab.name}
-                </h3>
-                <p className="text-sm text-gray-400 mb-3 leading-relaxed">
-                  {lab.vulnerability}
-                </p>
                 <div className="flex items-center space-x-2 mb-3">
+                  <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30 whitespace-nowrap">
+                    {lab.levelName.replace('level-', 'Level ')}
+                  </span>
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                     lab.hacked 
                       ? 'bg-green-500/20 text-green-400 border border-green-500/30'
@@ -149,13 +201,19 @@ export function LevelView({ level, onStatusChange, onHackedChange }: LevelViewPr
                   }`}>
                     {lab.hacked ? 'Completed' : lab.category}
                   </span>
-                  {lab.hacked && (
-                    <div className="flex items-center space-x-2 text-green-400">
-                      <CheckCircle className="h-4 w-4" />
-                      <span className="text-sm font-medium">Completed</span>
-                    </div>
-                  )}
                 </div>
+                <h3 className="text-lg font-semibold text-white mb-2 leading-tight">
+                  {lab.name}
+                </h3>
+                <p className="text-sm text-gray-400 mb-3 leading-relaxed">
+                  {lab.vulnerability}
+                </p>
+                {lab.hacked && (
+                  <div className="flex items-center space-x-2 text-green-400">
+                    <CheckCircle className="h-4 w-4" />
+                    <span className="text-sm font-medium">Completed</span>
+                  </div>
+                )}
               </div>
               
               {/* Status Indicator */}
@@ -257,20 +315,24 @@ export function LevelView({ level, onStatusChange, onHackedChange }: LevelViewPr
         </motion.div>
       )}
 
-      {/* Level Progress */}
+      {/* Overall Progress */}
       <motion.div 
         className="bg-gray-900 border border-gray-800 rounded-xl p-6 text-center"
         variants={itemVariants}
       >
-        <div className="flex items-center justify-center space-x-4 mb-4">
-          <div className="text-2xl font-bold text-green-500">
-            {level.labs.filter(lab => lab.hacked).length}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-blue-500">{levels.length}</div>
+            <div className="text-gray-400">Levels</div>
           </div>
-          <div className="text-gray-400">of</div>
-          <div className="text-2xl font-bold text-gray-300">
-            {level.labs.length}
+          <div className="text-center">
+            <div className="text-3xl font-bold text-gray-300">{totalLabs}</div>
+            <div className="text-gray-400">Total Labs</div>
           </div>
-          <div className="text-gray-400">labs completed</div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-green-500">{completedLabs}</div>
+            <div className="text-gray-400">Completed</div>
+          </div>
         </div>
         
         <div className="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
@@ -278,10 +340,17 @@ export function LevelView({ level, onStatusChange, onHackedChange }: LevelViewPr
             className="h-full bg-green-500 rounded-full"
             initial={{ width: 0 }}
             animate={{ 
-              width: `${(level.labs.filter(lab => lab.hacked).length / level.labs.length) * 100}%` 
+              width: `${(completedLabs / totalLabs) * 100}%` 
             }}
             transition={{ duration: 1, ease: "easeOut" }}
           />
+        </div>
+        
+        <div className="mt-4 text-center">
+          <span className="text-2xl font-bold text-green-500">
+            {Math.round((completedLabs / totalLabs) * 100)}%
+          </span>
+          <span className="text-gray-400 ml-2">overall completion</span>
         </div>
       </motion.div>
     </motion.div>

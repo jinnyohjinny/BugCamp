@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Grid3X3 } from 'lucide-react';
 import { useEffect } from 'react';
 import type { Level } from '../types/lab';
 
@@ -44,7 +44,7 @@ export function Navigation({ levels, currentLevel, onLevelChange }: NavigationPr
           break;
         case 'Home':
           event.preventDefault();
-          onLevelChange(levels[0].name);
+          onLevelChange('all-labs');
           break;
         case 'End':
           event.preventDefault();
@@ -68,6 +68,31 @@ export function Navigation({ levels, currentLevel, onLevelChange }: NavigationPr
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center justify-between py-4">
           <div className="flex items-center space-x-1">
+            {/* All Labs Tab */}
+            <motion.button
+              onClick={() => onLevelChange('all-labs')}
+              className={`relative px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                currentLevel === 'all-labs'
+                  ? 'text-green-500 bg-green-500/10 border border-green-500/30'
+                  : 'text-gray-400 hover:text-gray-300 hover:bg-gray-800'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              title="Show all labs from all levels"
+            >
+              <Grid3X3 className="h-4 w-4 mr-2 inline" />
+              All Labs
+              {currentLevel === 'all-labs' && (
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-500"
+                  layoutId="activeTab"
+                  initial={false}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              )}
+            </motion.button>
+
+            {/* Level Tabs */}
             {levels.map((level) => (
               <motion.button
                 key={level.name}
@@ -111,7 +136,7 @@ export function Navigation({ levels, currentLevel, onLevelChange }: NavigationPr
             </motion.button>
             
             <span className="text-sm text-gray-500 px-3">
-              {currentIndex + 1} of {levels.length}
+              {currentLevel === 'all-labs' ? 'All Labs' : `${currentIndex + 1} of ${levels.length}`}
             </span>
             
             <motion.button
@@ -150,10 +175,10 @@ export function Navigation({ levels, currentLevel, onLevelChange }: NavigationPr
             
             <div className="text-center">
               <h2 className="text-lg font-semibold text-green-500">
-                {currentLevel.replace('level-', 'Level ')}
+                {currentLevel === 'all-labs' ? 'All Labs' : currentLevel.replace('level-', 'Level ')}
               </h2>
               <p className="text-sm text-gray-400">
-                {currentIndex + 1} of {levels.length}
+                {currentLevel === 'all-labs' ? 'All levels' : `${currentIndex + 1} of ${levels.length}`}
               </p>
             </div>
             
@@ -174,6 +199,20 @@ export function Navigation({ levels, currentLevel, onLevelChange }: NavigationPr
           
           {/* Mobile Level Pills */}
           <div className="flex items-center justify-center space-x-2 mt-4">
+            {/* All Labs Pill */}
+            <motion.button
+              onClick={() => onLevelChange('all-labs')}
+              className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                currentLevel === 'all-labs'
+                  ? 'bg-green-500 scale-125'
+                  : 'bg-gray-600 hover:bg-gray-500'
+              }`}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.8 }}
+              title="Show all labs"
+            />
+            
+            {/* Level Pills */}
             {levels.map((level) => (
               <motion.button
                 key={level.name}
@@ -194,7 +233,7 @@ export function Navigation({ levels, currentLevel, onLevelChange }: NavigationPr
         {/* Keyboard Shortcuts Help */}
         <div className="hidden lg:block text-center py-2 border-t border-gray-800">
           <p className="text-xs text-gray-500">
-            Keyboard shortcuts: ← → to navigate, Home/End for first/last level
+            Keyboard shortcuts: ← → to navigate, Home for all labs, End for last level
           </p>
         </div>
       </div>
