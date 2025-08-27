@@ -7,9 +7,12 @@ interface AllLabsViewProps {
   levels: Level[];
   onStatusChange: (labId: string, status: 'running' | 'stopped') => void;
   onHackedChange: (labId: string, hacked: boolean) => void;
+  labOperationInProgress: Set<string>;
+  labErrors: Map<string, string>;
+  labSuccess: Map<string, string>;
 }
 
-export function AllLabsView({ levels, onStatusChange, onHackedChange }: AllLabsViewProps) {
+export function AllLabsView({ levels, onStatusChange, onHackedChange, labOperationInProgress, labErrors, labSuccess }: AllLabsViewProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [filterLevel, setFilterLevel] = useState<string>('all');
@@ -112,6 +115,25 @@ export function AllLabsView({ levels, onStatusChange, onHackedChange }: AllLabsV
           <span className="text-blue-400">{runningLabs} running</span>
         </div>
       </motion.div>
+
+      {/* Global Operation Status */}
+      {labOperationInProgress.size > 0 && (
+        <motion.div 
+          className="w-full max-w-2xl mx-auto p-4 bg-blue-900/50 border border-blue-700 rounded-lg text-center"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="flex items-center justify-center space-x-3">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-400"></div>
+            <span className="text-blue-300 font-medium">
+              {labOperationInProgress.size === 1 
+                ? 'Lab operation in progress... Please wait until it completes.'
+                : `${labOperationInProgress.size} lab operations in progress... Please wait until they complete.`
+              }
+            </span>
+          </div>
+        </motion.div>
+      )}
 
       {/* Search and Filter Controls */}
       <motion.div 
@@ -247,20 +269,40 @@ export function AllLabsView({ levels, onStatusChange, onHackedChange }: AllLabsV
             <div className="flex items-center space-x-3 mb-3">
               <motion.button
                 onClick={() => onStatusChange(lab.id, lab.status === 'running' ? 'stopped' : 'running')}
+                disabled={labOperationInProgress.has(lab.id) || labOperationInProgress.size > 0}
+                title={
+                  labOperationInProgress.has(lab.id)
+                    ? (lab.status === 'running' ? 'Stopping lab...' : 'Starting lab...')
+                    : labOperationInProgress.size > 0
+                    ? 'Another lab operation is in progress. Please wait.'
+                    : lab.status === 'running'
+                    ? 'Click to stop the lab'
+                    : 'Click to start the lab'
+                }
                 className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg font-medium transition-colors ${
                   lab.status === 'running'
-                    ? 'bg-red-600 hover:bg-red-700 text-white'
-                    : 'bg-green-600 hover:bg-green-700 text-white'
+                    ? 'bg-red-600 hover:bg-red-700 text-white disabled:bg-red-800 disabled:cursor-not-allowed'
+                    : 'bg-green-600 hover:bg-green-700 text-white disabled:bg-green-800 disabled:cursor-not-allowed'
                 }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={(labOperationInProgress.has(lab.id) || labOperationInProgress.size > 0) ? {} : { scale: 1.02 }}
+                whileTap={(labOperationInProgress.has(lab.id) || labOperationInProgress.size > 0) ? {} : { scale: 0.98 }}
               >
-                {lab.status === 'running' ? (
+                {labOperationInProgress.has(lab.id) ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    <span>{lab.status === 'running' ? 'Stopping...' : 'Starting...'}</span>
+                  </>
+                ) : labOperationInProgress.size > 0 ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-400"></div>
+                    <span>Please wait...</span>
+                  </>
+                ) : lab.status === 'running' ? (
                   <>
                     <Square className="h-4 w-4" />
                     <span>Stop</span>
                   </>
-                ) : (
+                  ) : (
                   <>
                     <Play className="h-4 w-4" />
                     <span>Start</span>
@@ -282,6 +324,32 @@ export function AllLabsView({ levels, onStatusChange, onHackedChange }: AllLabsV
                 <CheckCircle className="h-4 w-4" />
               </motion.button>
             </div>
+
+            {/* Success Display */}
+            {labSuccess.has(lab.id) && (
+              <motion.div
+                className="mt-3 p-3 bg-green-900/50 border border-green-700 rounded-lg"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <p className="text-sm text-green-300">
+                  <span className="font-medium">Success:</span> {labSuccess.get(lab.id)}
+                </p>
+              </motion.div>
+            )}
+
+            {/* Error Display */}
+            {labErrors.has(lab.id) && (
+              <motion.div
+                className="mt-3 p-3 bg-red-900/50 border border-red-700 rounded-lg"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <p className="text-sm text-red-300">
+                  <span className="font-medium">Error:</span> {labErrors.get(lab.id)}
+                </p>
+              </motion.div>
+            )}
 
             {/* Access Link */}
             {lab.status === 'running' && (

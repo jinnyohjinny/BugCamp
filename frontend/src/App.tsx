@@ -7,7 +7,7 @@ import { Navigation } from './components/Navigation';
 import { LevelView } from './components/LevelView';
 import { AllLabsView } from './components/AllLabsView';
 import type { Lab, Level } from './types/lab';
-import { refreshLabsStatus, getAttackerServerStatus } from './lib/api';
+import { refreshLabsStatus, getAttackerServerStatus, deployLab, destroyLab } from './lib/api';
 import labsData from './labs.json';
 
 // Custom hook for hash-based navigation
@@ -40,6 +40,9 @@ function AppContent() {
   const [levels, setLevels] = useState<Level[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [attackerServerStatus, setAttackerServerStatus] = useState<'running' | 'stopped'>('stopped');
+  const [labOperationInProgress, setLabOperationInProgress] = useState<Set<string>>(new Set());
+  const [labErrors, setLabErrors] = useState<Map<string, string>>(new Map());
+  const [labSuccess, setLabSuccess] = useState<Map<string, string>>(new Map());
   
   const { currentLevel, navigate } = useHashNavigation();
 
@@ -157,15 +160,63 @@ function AppContent() {
     setLabs(allLabs);
   }, [levels]);
 
-  const handleStatusChange = (labId: string, status: 'running' | 'stopped') => {
-    setLevels(prevLevels =>
-      prevLevels.map(level => ({
-        ...level,
-        labs: level.labs.map(lab =>
-          lab.id === labId ? { ...lab, status } : lab
-        )
-      }))
-    );
+  const handleStatusChange = async (labId: string, status: 'running' | 'stopped') => {
+    // Set loading state
+    setLabOperationInProgress(prev => new Set(prev).add(labId));
+    
+    try {
+      if (status === 'running') {
+        // Start the lab
+        await deployLab(labId);
+      } else {
+        // Stop the lab
+        await destroyLab(labId);
+      }
+      
+      // Update local state after successful API call
+      setLevels(prevLevels =>
+        prevLevels.map(level => ({
+          ...level,
+          labs: level.labs.map(lab =>
+            lab.id === labId ? { ...lab, status } : lab
+          )
+        }))
+      );
+      
+      // Set success message
+      const successMessage = status === 'running' ? 'Lab started successfully!' : 'Lab stopped successfully!';
+      setLabSuccess(prev => new Map(prev).set(labId, successMessage));
+      
+      // Clear success message after 3 seconds
+      setTimeout(() => {
+        setLabSuccess(prev => {
+          const newMap = new Map(prev);
+          newMap.delete(labId);
+          return newMap;
+        });
+      }, 3000);
+    } catch (error) {
+      console.error(`Failed to ${status === 'running' ? 'start' : 'stop'} lab ${labId}:`, error);
+      // Set error state
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      setLabErrors(prev => new Map(prev).set(labId, errorMessage));
+      
+      // Clear error after 5 seconds
+      setTimeout(() => {
+        setLabErrors(prev => {
+          const newMap = new Map(prev);
+          newMap.delete(labId);
+          return newMap;
+        });
+      }, 5000);
+    } finally {
+      // Clear loading state
+      setLabOperationInProgress(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(labId);
+        return newSet;
+      });
+    }
   };
 
   const handleHackedChange = (labId: string, hacked: boolean) => {
@@ -305,12 +356,18 @@ function AppContent() {
                 levels={levels}
                 onStatusChange={handleStatusChange}
                 onHackedChange={handleHackedChange}
+                labOperationInProgress={labOperationInProgress}
+                labErrors={labErrors}
+                labSuccess={labSuccess}
               />
             ) : currentLevelData ? (
               <LevelView
                 level={currentLevelData}
                 onStatusChange={handleStatusChange}
                 onHackedChange={handleHackedChange}
+                labOperationInProgress={labOperationInProgress}
+                labErrors={labErrors}
+                labSuccess={labSuccess}
               />
             ) : null}
           </motion.div>
