@@ -2,7 +2,14 @@
 
 BugCamp is a comprehensive platform for hands-on vulnerability training and ethical hacking practice. It provides a collection of vulnerable applications and labs that security professionals can use to learn and practice various attack techniques in a safe, controlled environment.
 
-## 🚀 Quick Start
+## Requirements
+
+- Docker
+- Node.js (for API server)
+- jq (for JSON parsing in Makefile)
+- Make
+
+## How to Run
 
 ### Option 1: One-Command Startup (Recommended)
 ```bash
@@ -30,76 +37,59 @@ This will start both the API server and React frontend automatically.
    - Frontend: http://localhost:5173
    - API Server: http://localhost:3001
 
-## 🏗 Architecture
+## Run Labs Without UI Using Make
 
-### Frontend (React + TypeScript)
-- **Location**: `frontend/` directory
-- **Tech Stack**: React 19, TypeScript, Tailwind CSS, shadcn/ui, Framer Motion
-- **Features**: 
-  - Modern, responsive UI
-  - Real-time lab status monitoring
-  - Progress tracking with localStorage persistence
-  - Smooth animations and transitions
+You can run labs directly from the command line using the Makefile:
 
-### API Server (Node.js + Express)
-- **Location**: `api-server.js`
-- **Purpose**: Executes Makefile commands and manages lab status
-- **Endpoints**:
-  - `POST /api/make` - Execute make commands (deploy/destroy labs)
-  - `GET /api/status` - Check lab container status
-  - `GET /api/attacker-status` - Check attacker server status
-  - `GET /health` - Health check
+```bash
+# List all available levels
+make list
 
-### Lab Management (Makefile + Docker)
-- **Location**: `Makefile` and `labs/` directory
-- **Features**:
-  - Automated lab deployment and cleanup
-  - **Single lab enforcement**: Only one lab can run at a time
-  - Docker container management
-  - Network isolation with `labnet`
-  - Attacker server integration
+# List labs within a specific level
+make level-01
 
-## 🧪 Available Labs
+# Run a specific lab
+make jwt-1
+make sqli-1
+make cve-2014-6271
+make pickle
+make cve-2016-10033
+make jwt-2
 
-### Level 01: Basic Vulnerabilities
-- **JWT-1**: JWT Algorithm Confusion vulnerability (Port 8080)
-- **SQLi-1**: SQL Injection in news portal (Port 8080)
-- **CVE-2014-6271**: Shellshock vulnerability (Port 8080)
+# Check status of running containers
+make status
 
-Each lab includes:
-- Vulnerable application
-- Docker containerization
-- Clear learning objectives
-- Integration with attacker server
+# Clean up all containers
+make clean
 
-## 🎯 How It Works
+# Show help
+make help
+```
 
-1. **Deploy a Lab**: Click "Deploy" button → Executes `make <lab-name>` → Starts Docker containers
-   - **Note**: Only one lab can run at a time. Deploying a new lab will automatically stop any previously running lab.
-2. **Access the Lab**: Lab becomes accessible on port 8080
-3. **Practice Attacks**: Use the attacker server at http://localhost:8085 for tools
-4. **Mark as Complete**: Check "Hacked" checkbox when you've successfully exploited the vulnerability
-5. **Clean Up**: Click "Destroy" button → Executes `make clean` → Stops all containers
+### Available Labs
 
-## 📚 Learning Resources
+**Level 00: Fundamental**
+- `xss-1` - Cross-Site Scripting (XSS) vulnerability
 
-- Each lab includes detailed objectives and descriptions
-- Attacker server provides tools and payloads
-- Progress tracking helps monitor learning journey
-- Labs are categorized by vulnerability type
+**Level 01: Basic**
+- `cve-2014-6271` - Shellshock vulnerability
+- `jwt-1` - JWT Algorithm Confusion
+- `sqli-1` - SQL Injection
+- `pickle` - Python Pickle Deserialization
 
-## 🤝 Contributing
+**Level 02: Intermediate**
+- `cve-2016-10033` - PHPMailer Command Injection
+- `jwt-2` - Advanced JWT Algorithm Confusion
 
-1. Fork the repository
-2. Create a feature branch
-3. Add your lab or improvement
-4. Test thoroughly
-5. Submit a pull request
+## TODO List
+
+- [ ] Add more advanced vulnerability labs
+- [ ] Implement lab difficulty progression system
+- [ ] Add a mystery lab feature
+- [ ] Add an automatic checking system if you successfully hack the lab
+- [ ] Add blogs related to hacking and lab-replicated vulnerabilities
 
 ## ⚠️ Security Notice
 
 **IMPORTANT**: These labs contain intentionally vulnerable applications. Only run them in isolated environments. Never deploy these applications in production or on public networks.
-
-
-**Happy Hacking! 🎭🔒**
 
