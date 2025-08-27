@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Secure User Profile System{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-4 mb-4">
+            <i class="fas fa-shield-alt me-3"></i>
+            Secure User Profile System
+        </h1>
+        <p class="lead mb-4">Enterprise-grade user profile management with advanced security features and comprehensive access controls.</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                    <a href="/profile" class="btn btn-light btn-lg px-4 me-sm-3">
+                        <i class="fas fa-user me-2"></i>
+                        View Profiles
+                    </a>
+                    <a href="/search" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-search me-2"></i>
+                        Search Users
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-user-shield fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Secure Authentication</h5>
+                        <p class="card-text">Advanced security protocols ensure only authorized users can access sensitive profile information.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-database fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Data Integrity</h5>
+                        <p class="card-text">Robust data validation and encryption protect user information from unauthorized access and modification.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-chart-line fa-3x text-info mb-3"></i>
+                        <h5 class="card-title">Analytics & Reporting</h5>
+                        <p class="card-text">Comprehensive reporting and analytics tools provide insights into system usage and security metrics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="mb-4">Professional Profile Management</h2>
+                <p class="lead mb-4">Our system provides enterprise-level user profile management with comprehensive security features designed for modern organizations.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Role-based access control</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Audit logging and monitoring</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Secure data transmission</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Compliance with industry standards</li>
+                </ul>
+                <a href="/profile" class="btn btn-primary btn-lg">
+                    <i class="fas fa-arrow-right me-2"></i>
+                    Get Started
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <i class="fas fa-laptop-code fa-8x text-muted"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

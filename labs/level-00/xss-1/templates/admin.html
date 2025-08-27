@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Secure User Profile System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-cog me-2"></i>
+                        Administrative Dashboard
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Access Restricted:</strong> This administrative interface is currently under development and requires elevated privileges.
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-users me-2"></i>
+                                        User Management
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Manage user accounts, permissions, and access controls.</p>
+                                    <button class="btn btn-primary btn-sm" disabled>
+                                        <i class="fas fa-user-plus me-2"></i>
+                                        Add User
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" disabled>
+                                        <i class="fas fa-user-edit me-2"></i>
+                                        Edit Users
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-shield-alt me-2"></i>
+                                        Security Settings
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Configure security policies and monitoring settings.</p>
+                                    <button class="btn btn-success btn-sm" disabled>
+                                        <i class="fas fa-lock me-2"></i>
+                                        Security Policy
+                                    </button>
+                                    <button class="btn btn-outline-success btn-sm" disabled>
+                                        <i class="fas fa-eye me-2"></i>
+                                        Monitoring
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-database me-2"></i>
+                                        System Configuration
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Configure system parameters and database settings.</p>
+                                    <button class="btn btn-info btn-sm" disabled>
+                                        <i class="fas fa-cogs me-2"></i>
+                                        System Settings
+                                    </button>
+                                    <button class="btn btn-outline-info btn-sm" disabled>
+                                        <i class="fas fa-database me-2"></i>
+                                        Database Config
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card border-warning">
+                                <div class="card-header bg-warning text-white">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-chart-line me-2"></i>
+                                        Analytics & Reports
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Generate system reports and view analytics data.</p>
+                                    <button class="btn btn-warning btn-sm" disabled>
+                                        <i class="fas fa-file-alt me-2"></i>
+                                        Generate Report
+                                    </button>
+                                    <button class="btn btn-outline-warning btn-sm" disabled>
+                                        <i class="fas fa-chart-bar me-2"></i>
+                                        View Analytics
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Back to Home
+                        </a>
+                        <a href="/profile" class="btn btn-outline-primary">
+                            <i class="fas fa-user me-2"></i>
+                            View Profiles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
