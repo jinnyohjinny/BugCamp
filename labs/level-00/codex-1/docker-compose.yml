@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  codex-1-lab:
+    build: .
+    container_name: codex-1-lab
+    ports:
+      - "9005:80"
+    networks:
+      - labnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  labnet:
+    external: true

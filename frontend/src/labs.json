@@ -35,6 +35,14 @@
           "port": 9004,
           "objective": "Access hidden information pages",
           "category": "Authorization Bypass"
+        },
+        {
+          "name": "codex-1",
+          "vulnerability": "PHP Code Execution via eval()",
+          "description": "An advanced code processing system designed for development environments. This professional application features dynamic text processing capabilities with a critical vulnerability in input validation that allows remote code execution through carefully crafted expressions.",
+          "port": 9005,
+          "objective": "Execute system commands",
+          "category": "Code Execution"
         }
       ]
     },
