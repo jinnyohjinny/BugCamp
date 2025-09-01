@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - SecurePortal{% endblock %}
+
+{% block nav %}
+<a href="/">Dashboard</a>
+<a href="/logout">Logout</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>User Profile</h1>
+    
+    <div style="margin-top: 2rem;">
+        <h3>Account Information</h3>
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+            <p><strong>Username:</strong> {{ user }}</p>
+            <p><strong>Account Type:</strong> Standard User</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Last Login:</strong> Just now</p>
+        </div>
+    </div>
+    
+    <div style="margin-top: 2rem;">
+        <h3>Account Settings</h3>
+        <p>Profile management features are currently under development.</p>
+        <div style="margin-top: 1rem;">
+            <button class="btn" disabled style="opacity: 0.6;">Change Password</button>
+            <button class="btn" disabled style="opacity: 0.6; margin-left: 1rem;">Update Profile</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

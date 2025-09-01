@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - SecurePortal{% endblock %}
+
+{% block nav %}
+<a href="/">Home</a>
+<a href="/profile">Profile</a>
+<a href="/logout">Logout</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Welcome, {{ user }}!</h1>
+    <p>You have successfully logged into your SecurePortal dashboard.</p>
+    
+    {% if flag %}
+    <div class="flag">
+        <h2>🎉 Congratulations!</h2>
+        <p>You have successfully accessed the administrative area.</p>
+        <div style="margin-top: 1rem; font-size: 1.2rem;">
+            {{ flag }}
+        </div>
+    </div>
+    {% endif %}
+    
+    <div style="margin-top: 2rem;">
+        <h3>Dashboard Features</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                <h4>User Management</h4>
+                <p>Access your personal settings and profile information.</p>
+                <a href="/profile" class="btn" style="margin-top: 0.5rem; font-size: 0.9rem;">View Profile</a>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                <h4>Security Center</h4>
+                <p>Monitor your account security and login history.</p>
+                <span style="color: #666; font-size: 0.9rem;">Coming Soon</span>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                <h4>Analytics</h4>
+                <p>View detailed reports and analytics data.</p>
+                <span style="color: #666; font-size: 0.9rem;">Coming Soon</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

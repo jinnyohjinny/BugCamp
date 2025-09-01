@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<a href="/">Home</a>
+<a href="/login">Login</a>
+<a href="/register">Register</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Welcome to SecurePortal</h1>
+    <p>Your trusted enterprise dashboard solution for secure access management.</p>
+    
+    <div style="margin-top: 2rem;">
+        <h3>Getting Started</h3>
+        <p>To access your dashboard, please <a href="/login">login</a> with your credentials or <a href="/register">create a new account</a>.</p>
+    </div>
+    
+    <div style="margin-top: 2rem;">
+        <h3>Features</h3>
+        <ul style="margin: 1rem 0; margin-left: 2rem;">
+            <li>Secure user authentication</li>
+            <li>Personal dashboard access</li>
+            <li>Profile management</li>
+            <li>Enterprise-grade security</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

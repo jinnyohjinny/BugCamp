@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Register - SecurePortal{% endblock %}
+
+{% block nav %}
+<a href="/">Home</a>
+<a href="/login">Login</a>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 0 auto;">
+    <h2>Create Account</h2>
+    
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+    
+    <form method="POST">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        
+        <button type="submit" class="btn">Create Account</button>
+    </form>
+    
+    <p style="margin-top: 1rem;">
+        Already have an account? <a href="/login">Login here</a>
+    </p>
+</div>
+{% endblock %}

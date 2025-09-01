@@ -9,7 +9,7 @@
           "vulnerability": "Cross-Site Scripting (XSS)",
           "description": "A modern user profile management platform with a critical reflected XSS vulnerability. Learn how malicious scripts can be injected into web applications and executed in victims' browsers, potentially stealing cookies, session tokens, or performing actions on behalf of users.",
           "port": 9001,
-          "objective": "Discover and exploit the XSS vulnerability by crafting malicious payloads that execute JavaScript code in the browser context",
+          "objective": "Execute JavaScript code",
           "category": "Cross-Site Scripting"
         },
         {
@@ -17,8 +17,16 @@
           "vulnerability": "Server-Side Request Forgery (SSRF)",
           "description": "A professional asset loading service that fetches external resources for web applications. This service contains a critical SSRF vulnerability that allows attackers to make the server perform requests to internal network resources, potentially exposing sensitive data or services not meant to be accessible externally.",
           "port": 9002,
-          "objective": "Exploit the SSRF vulnerability to access internal network resources and retrieve sensitive information from services running on localhost",
+          "objective": "Access internal services",
           "category": "Server-Side Request Forgery"
+        },
+        {
+          "name": "auth-1",
+          "vulnerability": "Insecure Cookie Authentication",
+          "description": "A modern enterprise portal using cookie-based authentication with a critical flaw in token generation. The application uses predictable authentication tokens that can be manipulated by attackers to impersonate other users, including administrative accounts.",
+          "port": 9003,
+          "objective": "Log in as admin",
+          "category": "Authentication Bypass"
         }
       ]
     },
@@ -31,7 +39,7 @@
           "vulnerability": "Shellshock (CVE-2014-6271)",
           "description": "A system monitoring dashboard running CGI scripts vulnerable to the infamous Shellshock bash bug. This critical vulnerability allows attackers to execute arbitrary commands by manipulating environment variables, affecting millions of systems worldwide when discovered in 2014.",
           "port": 9011,
-          "objective": "Leverage the Shellshock vulnerability in CGI environment variables to achieve remote code execution and gain system access",
+          "objective": "Execute system commands",
           "category": "Command Injection"
         },
         {
@@ -39,7 +47,7 @@
           "vulnerability": "JWT Algorithm Confusion Attack",
           "description": "A secure-looking web application using JSON Web Tokens (JWT) for authentication, but with a fatal flaw in algorithm verification. Learn how attackers can exploit the 'none' algorithm or algorithm confusion to forge valid tokens and bypass authentication mechanisms entirely.",
           "port": 9012,
-          "objective": "Manipulate JWT tokens by exploiting algorithm confusion to forge admin credentials and bypass authentication controls",
+          "objective": "Log in as admin",
           "category": "Authentication Bypass"
         },
         {
@@ -47,7 +55,7 @@
           "vulnerability": "SQL Injection",
           "description": "A feature-rich news portal with user authentication and content management, containing classic SQL injection vulnerabilities. Master the fundamentals of database manipulation through malicious SQL queries, from basic data extraction to achieving administrative access.",
           "port": 9013,
-          "objective": "Exploit SQL injection flaws to extract sensitive data, bypass login mechanisms, and potentially execute system commands",
+          "objective": "Extract admin credentials via SQL injection",
           "category": "SQL Injection"
         },
         {
@@ -55,7 +63,7 @@
           "vulnerability": "Python Pickle Deserialization Attack",
           "description": "A Python web application using pickle for session serialization - a dangerous practice that enables remote code execution. Learn how Python's pickle module can be weaponized to execute arbitrary code when deserializing untrusted data, a common issue in Python applications.",
           "port": 9014,
-          "objective": "Craft malicious pickle payloads to achieve remote code execution through unsafe deserialization of session data",
+          "objective": "Execute system commands",
           "category": "Deserialization"
         }
       ]
@@ -69,7 +77,7 @@
           "vulnerability": "PHPMailer RCE (CVE-2016-10033)",
           "description": "A professional contact form using a vulnerable version of PHPMailer, the world's most popular PHP email library. This critical vulnerability allows command injection through email headers, affecting countless websites that relied on PHPMailer for email functionality before the 2016 security patches.",
           "port": 9021,
-          "objective": "Exploit PHPMailer's argument injection vulnerability to execute arbitrary system commands through crafted email parameters",
+          "objective": "Execute system commands",
           "category": "Command Injection"
         },
         {
@@ -77,7 +85,7 @@
           "vulnerability": "Advanced JWT Algorithm Confusion",
           "description": "An enterprise-grade application with enhanced JWT security measures, but still vulnerable to sophisticated algorithm confusion attacks. This lab teaches advanced JWT manipulation techniques, including RS256 to HS256 confusion attacks and key extraction methods used in real-world scenarios.",
           "port": 9022,
-          "objective": "Perform advanced JWT algorithm confusion attacks, extract or forge signing keys, and achieve administrative access in a hardened environment",
+          "objective": "Log in as admin",
           "category": "Authentication Bypass"
         }
       ]
