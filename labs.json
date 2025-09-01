@@ -27,6 +27,14 @@
           "port": 9003,
           "objective": "Log in as admin",
           "category": "Authentication Bypass"
+        },
+        {
+          "name": "autho-1",
+          "vulnerability": "Insecure Direct Object References (IDOR)",
+          "description": "A professional information management platform with user authentication and content access controls. The application contains a critical authorization flaw that allows authenticated users to access restricted information by manipulating URL parameters, bypassing intended access controls.",
+          "port": 9004,
+          "objective": "Access hidden information pages",
+          "category": "Authorization Bypass"
         }
       ]
     },

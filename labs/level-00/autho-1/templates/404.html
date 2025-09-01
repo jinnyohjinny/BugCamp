@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Not Found - InfoHub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="display-4 text-muted">404</h1>
+                <h3>Information Not Found</h3>
+                <p class="lead">The requested information page could not be found.</p>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Return to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

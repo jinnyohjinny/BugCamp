@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - InfoHub{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>Dashboard</h2>
+        <p class="lead">Welcome to your InfoHub dashboard. Here you can access various information resources.</p>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Getting Started</h5>
+                        <p class="card-text">Learn how to use the InfoHub platform effectively.</p>
+                        <a href="{{ url_for('info_page', info_id=1) }}" class="btn btn-primary">View Info</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">User Guide</h5>
+                        <p class="card-text">Comprehensive guide for platform features.</p>
+                        <a href="{{ url_for('info_page', info_id=2) }}" class="btn btn-primary">View Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>User Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Username:</strong> {{ username }}</p>
+                <p><strong>Status:</strong> <span class="badge bg-success">Active</span></p>
+                <p><strong>Access Level:</strong> Standard User</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
