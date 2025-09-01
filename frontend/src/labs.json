@@ -2,74 +2,82 @@
   "levels": [
     {
       "name": "level-00",
-      "description": "Fundamental vulnerability labs for absolute beginners",
+      "description": "Essential security fundamentals for newcomers - start your cybersecurity journey with the most common web vulnerabilities",
       "labs": [
         {
           "name": "xss-1",
           "vulnerability": "Cross-Site Scripting (XSS)",
-          "description": "Professional user profile management system with XSS vulnerability",
+          "description": "A modern user profile management platform with a critical reflected XSS vulnerability. Learn how malicious scripts can be injected into web applications and executed in victims' browsers, potentially stealing cookies, session tokens, or performing actions on behalf of users.",
           "port": 9001,
-          "objective": "Exploit XSS vulnerability to execute arbitrary JavaScript code",
+          "objective": "Discover and exploit the XSS vulnerability by crafting malicious payloads that execute JavaScript code in the browser context",
           "category": "Cross-Site Scripting"
+        },
+        {
+          "name": "ssrf-1",
+          "vulnerability": "Server-Side Request Forgery (SSRF)",
+          "description": "A professional asset loading service that fetches external resources for web applications. This service contains a critical SSRF vulnerability that allows attackers to make the server perform requests to internal network resources, potentially exposing sensitive data or services not meant to be accessible externally.",
+          "port": 9002,
+          "objective": "Exploit the SSRF vulnerability to access internal network resources and retrieve sensitive information from services running on localhost",
+          "category": "Server-Side Request Forgery"
         }
       ]
     },
     {
       "name": "level-01",
-      "description": "Basic vulnerability labs for beginners",
+      "description": "Core vulnerability exploitation techniques - build practical skills with real-world attack scenarios",
       "labs": [
         {
           "name": "cve-2014-6271",
-          "vulnerability": "Shellshock",
-          "description": "System status monitoring application with CGI",
+          "vulnerability": "Shellshock (CVE-2014-6271)",
+          "description": "A system monitoring dashboard running CGI scripts vulnerable to the infamous Shellshock bash bug. This critical vulnerability allows attackers to execute arbitrary commands by manipulating environment variables, affecting millions of systems worldwide when discovered in 2014.",
           "port": 9011,
-          "objective": "Obtain remote code execution via Shellshock vulnerability",
+          "objective": "Leverage the Shellshock vulnerability in CGI environment variables to achieve remote code execution and gain system access",
           "category": "Command Injection"
         },
         {
           "name": "jwt-1",
-          "vulnerability": "JWT Algorithm Confusion",
-          "description": "Secure web application with JWT authentication",
+          "vulnerability": "JWT Algorithm Confusion Attack",
+          "description": "A secure-looking web application using JSON Web Tokens (JWT) for authentication, but with a fatal flaw in algorithm verification. Learn how attackers can exploit the 'none' algorithm or algorithm confusion to forge valid tokens and bypass authentication mechanisms entirely.",
           "port": 9012,
-          "objective": "Bypass authentication to gain admin access via JWT manipulation",
+          "objective": "Manipulate JWT tokens by exploiting algorithm confusion to forge admin credentials and bypass authentication controls",
           "category": "Authentication Bypass"
         },
         {
           "name": "sqli-1",
           "vulnerability": "SQL Injection",
-          "description": "News portal application with database vulnerabilities",
+          "description": "A feature-rich news portal with user authentication and content management, containing classic SQL injection vulnerabilities. Master the fundamentals of database manipulation through malicious SQL queries, from basic data extraction to achieving administrative access.",
           "port": 9013,
-          "objective": "Exploit SQL injection to gain admin access and execute commands",
+          "objective": "Exploit SQL injection flaws to extract sensitive data, bypass login mechanisms, and potentially execute system commands",
           "category": "SQL Injection"
         },
         {
           "name": "pickle",
-          "vulnerability": "Python Pickle Deserialization",
-          "description": "Secure web application with user authentication and session management",
+          "vulnerability": "Python Pickle Deserialization Attack",
+          "description": "A Python web application using pickle for session serialization - a dangerous practice that enables remote code execution. Learn how Python's pickle module can be weaponized to execute arbitrary code when deserializing untrusted data, a common issue in Python applications.",
           "port": 9014,
-          "objective": "Exploit pickle deserialization to gain remote code execution",
+          "objective": "Craft malicious pickle payloads to achieve remote code execution through unsafe deserialization of session data",
           "category": "Deserialization"
         }
       ]
     },
     {
       "name": "level-02",
-      "description": "Intermediate vulnerability labs for experienced users",
+      "description": "Advanced exploitation scenarios - tackle complex vulnerabilities and sophisticated attack chains used by real threat actors",
       "labs": [
         {
           "name": "cve-2016-10033",
-          "vulnerability": "PHPMailer Command Injection",
-          "description": "Professional contact form application with email functionality",
+          "vulnerability": "PHPMailer RCE (CVE-2016-10033)",
+          "description": "A professional contact form using a vulnerable version of PHPMailer, the world's most popular PHP email library. This critical vulnerability allows command injection through email headers, affecting countless websites that relied on PHPMailer for email functionality before the 2016 security patches.",
           "port": 9021,
-          "objective": "Exploit PHPMailer vulnerability to achieve remote code execution",
+          "objective": "Exploit PHPMailer's argument injection vulnerability to execute arbitrary system commands through crafted email parameters",
           "category": "Command Injection"
         },
         {
           "name": "jwt-2",
-          "vulnerability": "JWT Algorithm Confusion",
-          "description": "Secure enterprise portal with JWT authentication vulnerability",
+          "vulnerability": "Advanced JWT Algorithm Confusion",
+          "description": "An enterprise-grade application with enhanced JWT security measures, but still vulnerable to sophisticated algorithm confusion attacks. This lab teaches advanced JWT manipulation techniques, including RS256 to HS256 confusion attacks and key extraction methods used in real-world scenarios.",
           "port": 9022,
-          "objective": "Exploit JWT algorithm confusion to bypass authentication and gain admin access",
+          "objective": "Perform advanced JWT algorithm confusion attacks, extract or forge signing keys, and achieve administrative access in a hardened environment",
           "category": "Authentication Bypass"
         }
       ]
