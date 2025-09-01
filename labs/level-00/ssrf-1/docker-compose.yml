@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  ssrf-1-lab:
+    build: .
+    container_name: ssrf-1-lab
+    ports:
+      - "9002:8080"
+    networks:
+      - labnet
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=ssrf-lab-secret-key-production
+    restart: unless-stopped
+    command: >
+      sh -c "python internal_service.py &
+             python app.py"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  labnet:
+    external: true

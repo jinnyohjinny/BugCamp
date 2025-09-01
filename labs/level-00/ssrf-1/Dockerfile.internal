@@ -1,0 +1,24 @@
+FROM python:3.11-alpine
+
+# Install system dependencies
+RUN apk add --no-cache wget
+
+# Set working directory
+WORKDIR /app
+
+# Copy internal service code
+COPY internal_service.py .
+
+# Create non-root user
+RUN adduser -D -s /bin/sh service && chown -R service:service /app
+USER service
+
+# Expose port
+EXPOSE 1234
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:1234/ || exit 1
+
+# Start the internal service
+CMD ["python", "internal_service.py"]
