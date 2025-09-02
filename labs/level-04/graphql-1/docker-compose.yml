@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  graphql-1:
+    build: .
+    container_name: graphql-1-lab
+    ports:
+      - "9031:3000"
+    networks:
+      - labnet
+
+networks:
+  labnet:
+    external: true

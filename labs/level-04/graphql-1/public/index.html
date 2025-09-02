@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .nav-tabs {
+            display: flex;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 30px;
+        }
+
+        .nav-tab {
+            background: none;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .nav-tab:hover {
+            color: #667eea;
+            background-color: #f8f9ff;
+        }
+
+        .content {
+            min-height: 300px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-title {
+            color: #333;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .project-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .project-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-progress {
+            background-color: #ffeaa7;
+            color: #d63031;
+        }
+
+        .status-planning {
+            background-color: #a8e6cf;
+            color: #00b894;
+        }
+
+        .status-completed {
+            background-color: #dda0dd;
+            color: #6c5ce7;
+        }
+
+        .status-scheduled {
+            background-color: #fab1a0;
+            color: #e17055;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            padding: 40px;
+        }
+
+        .error {
+            text-align: center;
+            color: #d63031;
+            font-size: 1.1em;
+            padding: 40px;
+        }
+
+        .about-content {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+
+        .about-content h3 {
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Project Management Platform</h1>
+            <p>Streamline your project workflow with our comprehensive management system</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('projects')">Projects</button>
+            <button class="nav-tab" onclick="showTab('about')">About</button>
+        </div>
+
+        <div class="content">
+            <div id="projects" class="tab-pane active">
+                <div class="loading">Loading projects...</div>
+            </div>
+            
+            <div id="about" class="tab-pane">
+                <div class="about-content">
+                    <h3>About Our Platform</h3>
+                    <p>Our Project Management Platform is designed to help teams collaborate effectively and deliver projects on time. Built with modern web technologies, it provides a seamless experience for project tracking and team coordination.</p>
+                    
+                    <h3>Key Features</h3>
+                    <ul class="feature-list">
+                        <li>Real-time project status tracking</li>
+                        <li>Team collaboration tools</li>
+                        <li>Advanced reporting and analytics</li>
+                        <li>API-first architecture</li>
+                        <li>Secure data management</li>
+                        <li>Mobile-responsive design</li>
+                    </ul>
+                    
+                    <h3>Technology Stack</h3>
+                    <p>Our platform is built using cutting-edge technologies including GraphQL for efficient data querying, React for the user interface, and Node.js for the backend services. This ensures optimal performance and scalability for teams of any size.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-pane');
+            const buttons = document.querySelectorAll('.nav-tab');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        async function loadProjects() {
+            try {
+                const response = await fetch('/graphql', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: `
+                            query {
+                                projects {
+                                    id
+                                    name
+                                    description
+                                    status
+                                }
+                            }
+                        `
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.data && data.data.projects) {
+                    displayProjects(data.data.projects);
+                } else {
+                    throw new Error('Failed to load projects');
+                }
+            } catch (error) {
+                document.getElementById('projects').innerHTML = '<div class="error">Error loading projects. Please try again later.</div>';
+            }
+        }
+
+        function displayProjects(projects) {
+            const projectsHtml = projects.map(project => {
+                const statusClass = project.status.toLowerCase().replace(/\s+/g, '-');
+                return `
+                    <div class="project-card">
+                        <div class="project-title">${project.name}</div>
+                        <div class="project-description">${project.description}</div>
+                        <div class="project-status status-${statusClass}">${project.status}</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('projects').innerHTML = `
+                <div class="projects-grid">
+                    ${projectsHtml}
+                </div>
+            `;
+        }
+
+        loadProjects();
+    </script>
+</body>
+</html>

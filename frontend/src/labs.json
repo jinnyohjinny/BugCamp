@@ -135,6 +135,20 @@
           "category": "Authentication Bypass"
         }
       ]
+    },
+    {
+      "name": "level-04",
+      "description": "Advanced GraphQL security challenges - explore API introspection vulnerabilities and data exposure techniques",
+      "labs": [
+        {
+          "name": "graphql-1",
+          "vulnerability": "GraphQL Introspection Information Disclosure",
+          "description": "A modern project management platform built with GraphQL API that provides comprehensive project tracking and team collaboration features for enterprise environments.",
+          "port": 9031,
+          "objective": "Extract sensitive information via GraphQL introspection",
+          "category": "Information Disclosure"
+        }
+      ]
     }
   ]
 }
