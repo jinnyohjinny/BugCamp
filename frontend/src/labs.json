@@ -51,6 +51,14 @@
           "port": 9006,
           "objective": "Execute system commands",
           "category": "Command Injection"
+        },
+        {
+          "name": "dirtrav-1",
+          "vulnerability": "Directory Traversal",
+          "description": "A professional corporate asset gallery platform for managing and displaying media files. This enterprise application features dynamic file serving capabilities with a critical vulnerability in path validation that allows attackers to access files outside the intended directory structure.",
+          "port": 9007,
+          "objective": "Retrieve sensitive files from the server",
+          "category": "Directory Traversal"
         }
       ]
     },
