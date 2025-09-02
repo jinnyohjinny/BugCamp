@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  xssinclude-lab:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: xssinclude-lab
+    ports:
+      - "9041:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    networks:
+      - labnet
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    read_only: false
+    tmpfs:
+      - /tmp
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  labnet:
+    external: true

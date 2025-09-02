@@ -149,6 +149,20 @@
           "category": "Information Disclosure"
         }
       ]
+    },
+    {
+      "name": "level-05",
+      "description": "Advanced Cross-Site Scripting techniques - master sophisticated XSS attack vectors and client-side security bypasses",
+      "labs": [
+        {
+          "name": "xssinclude",
+          "vulnerability": "Cross-Site Scripting via JavaScript Include",
+          "description": "A professional secure vault platform for managing personal secrets with dynamic JavaScript-based content loading and user session management.",
+          "port": 9041,
+          "objective": "Extract user secrets via XSS",
+          "category": "Cross-Site Scripting"
+        }
+      ]
     }
   ]
 }
