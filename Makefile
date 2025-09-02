@@ -148,8 +148,8 @@ $(ALL_LABS): ## Build and run the specified lab
 	fi
 	
 	# Check if lab directory exists (search in all levels)
-	@if [ ! -d "labs/level-01/$@" ] && [ ! -d "labs/level-02/$@" ] && [ ! -d "labs/level-03/$@" ] && [ ! -d "labs/level-00/$@" ] && [ ! -d "labs/level-04/$@" ] && [ ! -d "labs/level-05/$@" ]; then \
-		echo -e "$(RED)Error: Lab directory not found in labs/level-01/, labs/level-02/, labs/level-03/, labs/level-00/, labs/level-04/, or labs/level-05/$(NC)"; \
+	@if [ ! -d "labs/level-01/$@" ] && [ ! -d "labs/level-02/$@" ] && [ ! -d "labs/level-03/$@" ] && [ ! -d "labs/level-00/$@" ] && [ ! -d "labs/level-04/$@" ] && [ ! -d "labs/level-05/$@" ] && [ ! -d "labs/level-06/$@" ]; then \
+		echo -e "$(RED)Error: Lab directory not found in labs/level-01/, labs/level-02/, labs/level-03/, labs/level-00/, labs/level-04/, labs/level-05/, or labs/level-06/$(NC)"; \
 		exit 1; \
 	fi
 	
@@ -186,7 +186,7 @@ $(ALL_LABS): ## Build and run the specified lab
 	@echo -e "$(GREEN)Port: $(LAB_PORT)$(NC)"
 	@echo ""
 	
-	# Build and run the lab (try level-01 first, then level-02, then level-03, then level-00, then level-04, then level-05)
+	# Build and run the lab (try level-01 first, then level-02, then level-03, then level-00, then level-04, then level-05, then level-06)
 	@echo -e "$(YELLOW)Building and starting lab container...$(NC)"
 	@if [ -d "labs/level-01/$@" ]; then \
 		cd labs/level-01/$@ && docker-compose up -d --build; \
@@ -200,6 +200,8 @@ $(ALL_LABS): ## Build and run the specified lab
 		cd labs/level-04/$@ && docker-compose up -d --build; \
 	elif [ -d "labs/level-05/$@" ]; then \
 		cd labs/level-05/$@ && docker-compose up -d --build; \
+	elif [ -d "labs/level-06/$@" ]; then \
+		cd labs/level-06/$@ && docker-compose up -d --build; \
 	else \
 		echo -e "$(RED)Error: Could not find lab directory$(NC)"; \
 		exit 1; \

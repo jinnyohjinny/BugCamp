@@ -163,6 +163,20 @@
           "category": "Cross-Site Scripting"
         }
       ]
+    },
+    {
+      "name": "level-06",
+      "description": "Advanced authentication and authorization vulnerabilities - master SAML security issues and identity provider attacks",
+      "labs": [
+        {
+          "name": "saml-1",
+          "vulnerability": "SAML Response Signature Bypass",
+          "description": "A professional enterprise identity management platform featuring SAML-based single sign-on with identity provider and service provider integration.",
+          "port": 9051,
+          "objective": "Log in as admin via SAML response manipulation",
+          "category": "Authentication Bypass"
+        }
+      ]
     }
   ]
 }
