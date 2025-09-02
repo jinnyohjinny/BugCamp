@@ -43,6 +43,14 @@
           "port": 9005,
           "objective": "Execute system commands",
           "category": "Code Execution"
+        },
+        {
+          "name": "comex-1",
+          "vulnerability": "Command Injection",
+          "description": "A professional network diagnostics platform that provides connectivity testing services. This enterprise-grade application features real-time network monitoring capabilities with a critical vulnerability in input validation that allows attackers to execute arbitrary system commands through parameter manipulation.",
+          "port": 9006,
+          "objective": "Execute system commands",
+          "category": "Command Injection"
         }
       ]
     },
