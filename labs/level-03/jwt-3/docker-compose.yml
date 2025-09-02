@@ -1,0 +1,18 @@
+services:
+  jwt-3:
+    build: .
+    container_name: jwt-3-lab
+    ports:
+      - "9023:3000"
+    networks:
+      - labnet
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jwt-3.rule=Host(`jwt-3.local`)"
+      - "traefik.http.services.jwt-3.loadbalancer.server.port=3000"
+
+networks:
+  labnet:
+    external: true
+    name: labnet

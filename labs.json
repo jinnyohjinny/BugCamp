@@ -7,7 +7,7 @@
         {
           "name": "xss-1",
           "vulnerability": "Cross-Site Scripting (XSS)",
-          "description": "A modern user profile management platform with a critical reflected XSS vulnerability. Learn how malicious scripts can be injected into web applications and executed in victims' browsers, potentially stealing cookies, session tokens, or performing actions on behalf of users.",
+          "description": "A modern user profile management platform that allows users to create and customize their personal profiles with dynamic content rendering and social features.",
           "port": 9001,
           "objective": "Execute JavaScript code",
           "category": "Cross-Site Scripting"
@@ -15,7 +15,7 @@
         {
           "name": "ssrf-1",
           "vulnerability": "Server-Side Request Forgery (SSRF)",
-          "description": "A professional asset loading service that fetches external resources for web applications. This service contains a critical SSRF vulnerability that allows attackers to make the server perform requests to internal network resources, potentially exposing sensitive data or services not meant to be accessible externally.",
+          "description": "A professional asset loading service that fetches and processes external resources for web applications, providing URL-based content integration capabilities.",
           "port": 9002,
           "objective": "Access internal services",
           "category": "Server-Side Request Forgery"
@@ -23,7 +23,7 @@
         {
           "name": "auth-1",
           "vulnerability": "Insecure Cookie Authentication",
-          "description": "A modern enterprise portal using cookie-based authentication with a critical flaw in token generation. The application uses predictable authentication tokens that can be manipulated by attackers to impersonate other users, including administrative accounts.",
+          "description": "A modern enterprise portal providing secure access to corporate resources through cookie-based authentication and user session management.",
           "port": 9003,
           "objective": "Log in as admin",
           "category": "Authentication Bypass"
@@ -31,7 +31,7 @@
         {
           "name": "autho-1",
           "vulnerability": "Insecure Direct Object References (IDOR)",
-          "description": "A professional information management platform with user authentication and content access controls. The application contains a critical authorization flaw that allows authenticated users to access restricted information by manipulating URL parameters, bypassing intended access controls.",
+          "description": "A professional information management platform with user authentication and content access controls for organizing and viewing corporate documents.",
           "port": 9004,
           "objective": "Access hidden information pages",
           "category": "Authorization Bypass"
@@ -39,7 +39,7 @@
         {
           "name": "codex-1",
           "vulnerability": "PHP Code Execution via eval()",
-          "description": "An advanced code processing system designed for development environments. This professional application features dynamic text processing capabilities with a critical vulnerability in input validation that allows remote code execution through carefully crafted expressions.",
+          "description": "An advanced code processing system designed for development environments, featuring dynamic text processing and expression evaluation capabilities.",
           "port": 9005,
           "objective": "Execute system commands",
           "category": "Code Execution"
@@ -47,7 +47,7 @@
         {
           "name": "comex-1",
           "vulnerability": "Command Injection",
-          "description": "A professional network diagnostics platform that provides connectivity testing services. This enterprise-grade application features real-time network monitoring capabilities with a critical vulnerability in input validation that allows attackers to execute arbitrary system commands through parameter manipulation.",
+          "description": "A professional network diagnostics platform that provides connectivity testing services and real-time network monitoring capabilities for system administrators.",
           "port": 9006,
           "objective": "Execute system commands",
           "category": "Command Injection"
@@ -55,7 +55,7 @@
         {
           "name": "dirtrav-1",
           "vulnerability": "Directory Traversal",
-          "description": "A professional corporate asset gallery platform for managing and displaying media files. This enterprise application features dynamic file serving capabilities with a critical vulnerability in path validation that allows attackers to access files outside the intended directory structure.",
+          "description": "A professional corporate asset gallery platform for managing and displaying media files with dynamic file serving capabilities.",
           "port": 9007,
           "objective": "Retrieve sensitive files from the server",
           "category": "Directory Traversal"
@@ -69,7 +69,7 @@
         {
           "name": "cve-2014-6271",
           "vulnerability": "Shellshock (CVE-2014-6271)",
-          "description": "A system monitoring dashboard running CGI scripts vulnerable to the infamous Shellshock bash bug. This critical vulnerability allows attackers to execute arbitrary commands by manipulating environment variables, affecting millions of systems worldwide when discovered in 2014.",
+          "description": "A system monitoring dashboard that provides real-time server statistics and system health information through CGI-based web interfaces.",
           "port": 9011,
           "objective": "Execute system commands",
           "category": "Command Injection"
@@ -77,7 +77,7 @@
         {
           "name": "jwt-1",
           "vulnerability": "JWT Algorithm Confusion Attack",
-          "description": "A secure-looking web application using JSON Web Tokens (JWT) for authentication, but with a fatal flaw in algorithm verification. Learn how attackers can exploit the 'none' algorithm or algorithm confusion to forge valid tokens and bypass authentication mechanisms entirely.",
+          "description": "A secure web application using JSON Web Tokens (JWT) for user authentication and session management with role-based access controls.",
           "port": 9012,
           "objective": "Log in as admin",
           "category": "Authentication Bypass"
@@ -85,7 +85,7 @@
         {
           "name": "sqli-1",
           "vulnerability": "SQL Injection",
-          "description": "A feature-rich news portal with user authentication and content management, containing classic SQL injection vulnerabilities. Master the fundamentals of database manipulation through malicious SQL queries, from basic data extraction to achieving administrative access.",
+          "description": "A feature-rich news portal with user authentication, content management, and article publishing capabilities for journalists and editors.",
           "port": 9013,
           "objective": "Extract admin credentials via SQL injection",
           "category": "SQL Injection"
@@ -93,7 +93,7 @@
         {
           "name": "pickle",
           "vulnerability": "Python Pickle Deserialization Attack",
-          "description": "A Python web application using pickle for session serialization - a dangerous practice that enables remote code execution. Learn how Python's pickle module can be weaponized to execute arbitrary code when deserializing untrusted data, a common issue in Python applications.",
+          "description": "A Python web application that handles user sessions and data serialization for maintaining persistent user state across requests.",
           "port": 9014,
           "objective": "Execute system commands",
           "category": "Deserialization"
@@ -107,7 +107,7 @@
         {
           "name": "cve-2016-10033",
           "vulnerability": "PHPMailer RCE (CVE-2016-10033)",
-          "description": "A professional contact form using a vulnerable version of PHPMailer, the world's most popular PHP email library. This critical vulnerability allows command injection through email headers, affecting countless websites that relied on PHPMailer for email functionality before the 2016 security patches.",
+          "description": "A professional contact form service that handles email communications and message delivery for business websites using automated email processing.",
           "port": 9021,
           "objective": "Execute system commands",
           "category": "Command Injection"
@@ -115,8 +115,22 @@
         {
           "name": "jwt-2",
           "vulnerability": "Advanced JWT Algorithm Confusion",
-          "description": "An enterprise-grade application with enhanced JWT security measures, but still vulnerable to sophisticated algorithm confusion attacks. This lab teaches advanced JWT manipulation techniques, including RS256 to HS256 confusion attacks and key extraction methods used in real-world scenarios.",
+          "description": "An enterprise-grade application with enhanced JWT security measures for user authentication, featuring advanced token validation and cryptographic algorithms.",
           "port": 9022,
+          "objective": "Log in as admin",
+          "category": "Authentication Bypass"
+        }
+      ]
+    },
+    {
+      "name": "level-03",
+      "description": "Expert-level security challenges - master the most sophisticated vulnerabilities and attack techniques used by advanced threat actors",
+      "labs": [
+        {
+          "name": "jwt-3",
+          "vulnerability": "JWT Signature Bypass",
+          "description": "A modern enterprise portal platform that provides secure access to corporate resources and administrative functions. Features user registration, authentication system, and role-based access controls for different organizational levels.",
+          "port": 9023,
           "objective": "Log in as admin",
           "category": "Authentication Bypass"
         }
