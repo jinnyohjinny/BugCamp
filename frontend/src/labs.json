@@ -177,6 +177,20 @@
           "category": "Authentication Bypass"
         }
       ]
+    },
+    {
+      "name": "level-07",
+      "description": "Advanced JWT signature vulnerabilities - explore JWT signing oracle attacks and cryptographic key reuse vulnerabilities",
+      "labs": [
+        {
+          "name": "signing-oracle",
+          "vulnerability": "JWT Signing Oracle Attack",
+          "description": "A secure enterprise key management platform with JWT-based session management and access controls for protecting sensitive cryptographic keys and data.",
+          "port": 9061,
+          "objective": "Access admin secrets via JWT signing oracle",
+          "category": "JWT Signature Vulnerability"
+        }
+      ]
     }
   ]
 }

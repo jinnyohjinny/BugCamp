@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  signing-oracle-lab:
+    build: .
+    container_name: signing-oracle-lab
+    ports:
+      - "9061:8080"
+    networks:
+      - labnet
+
+networks:
+  labnet:
+    external: true
