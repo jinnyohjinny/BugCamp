@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  dirtrav-1-lab:
+    build: .
+    container_name: dirtrav-1-lab
+    ports:
+      - "9007:8080"
+    networks:
+      - labnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  labnet:
+    external: true
