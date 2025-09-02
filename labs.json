@@ -191,6 +191,20 @@
           "category": "JWT Signature Vulnerability"
         }
       ]
+    },
+    {
+      "name": "level-08",
+      "description": "API security vulnerabilities - explore insecure direct object references in modern REST APIs and secrets management systems",
+      "labs": [
+        {
+          "name": "api-1",
+          "vulnerability": "API Insecure Direct Object References (IDOR)",
+          "description": "A professional secrets management platform with user authentication and API-based content access for storing and retrieving sensitive information.",
+          "port": 9071,
+          "objective": "Access other users' secrets via API IDOR",
+          "category": "Authorization Bypass"
+        }
+      ]
     }
   ]
 }

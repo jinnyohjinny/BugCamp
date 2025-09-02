@@ -1,0 +1,18 @@
+services:
+  api-1:
+    build: .
+    container_name: api-1-lab
+    ports:
+      - "9071:3000"
+    networks:
+      - labnet
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-1.rule=Host(`api-1.local`)"
+      - "traefik.http.services.api-1.loadbalancer.server.port=3000"
+
+networks:
+  labnet:
+    external: true
+    name: labnet

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureVault - Professional Secrets Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SecureVault</h1>
+            <p class="subtitle">Professional Secrets Management Platform</p>
+        </header>
+
+        <div id="auth-section" class="auth-section">
+            <div class="form-container">
+                <div class="form-tabs">
+                    <button id="login-tab" class="tab-button active">Login</button>
+                    <button id="register-tab" class="tab-button">Register</button>
+                </div>
+
+                <div id="login-form" class="form active">
+                    <h2>Login to Your Account</h2>
+                    <form id="loginForm">
+                        <input type="email" id="login-email" placeholder="Email" required>
+                        <input type="password" id="login-password" placeholder="Password" required>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+
+                <div id="register-form" class="form">
+                    <h2>Create New Account</h2>
+                    <form id="registerForm">
+                        <input type="text" id="register-username" placeholder="Username" required>
+                        <input type="email" id="register-email" placeholder="Email" required>
+                        <input type="password" id="register-password" placeholder="Password" required>
+                        <button type="submit">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-section" class="main-section hidden">
+            <div class="header-bar">
+                <div class="user-info">
+                    <span>Welcome, <span id="username"></span></span>
+                </div>
+                <button id="logout-btn" class="logout-btn">Logout</button>
+            </div>
+
+            <div class="content">
+                <div class="secrets-section">
+                    <div class="section-header">
+                        <h2>Your Secrets</h2>
+                        <button id="add-secret-btn" class="add-btn">+ Add New Secret</button>
+                    </div>
+                    
+                    <div id="secrets-list" class="secrets-list">
+                        <div class="empty-state">
+                            <p>No secrets yet. Create your first secret to get started.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="secret-detail" class="secret-detail hidden">
+                    <div class="detail-header">
+                        <button id="back-btn" class="back-btn">← Back to List</button>
+                        <h3 id="secret-title"></h3>
+                    </div>
+                    <div class="secret-content">
+                        <div class="field">
+                            <label>Secret Value:</label>
+                            <div id="secret-value" class="secret-value"></div>
+                        </div>
+                        <div class="field">
+                            <label>Created:</label>
+                            <div id="secret-date"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="add-secret-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Secret</h3>
+                    <button id="close-modal" class="close-btn">×</button>
+                </div>
+                <form id="add-secret-form">
+                    <input type="text" id="secret-title-input" placeholder="Secret Title" required>
+                    <textarea id="secret-value-input" placeholder="Secret Value" required></textarea>
+                    <div class="modal-actions">
+                        <button type="button" id="cancel-btn">Cancel</button>
+                        <button type="submit">Save Secret</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="error-message" class="error-message hidden"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
