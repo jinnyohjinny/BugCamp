@@ -3,7 +3,7 @@ services:
     build: .
     container_name: api-1-lab
     ports:
-      - "9071:3000"
+      - "9801:3000"
     networks:
       - labnet
     restart: unless-stopped

@@ -5,7 +5,7 @@ services:
     build: .
     container_name: graphql-1-lab
     ports:
-      - "9031:3000"
+      - "9401:3000"
     networks:
       - labnet
 

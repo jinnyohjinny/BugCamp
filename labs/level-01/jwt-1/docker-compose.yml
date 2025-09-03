@@ -3,7 +3,7 @@ services:
     build: .
     container_name: jwt-1-lab
     ports:
-      - "9012:3000"
+      - "9102:3000"
     networks:
       - labnet
     restart: unless-stopped

@@ -5,7 +5,7 @@ services:
     build: .
     container_name: saml-1-lab
     ports:
-      - "9051:80"
+      - "9601:80"
     networks:
       - labnet
     environment:

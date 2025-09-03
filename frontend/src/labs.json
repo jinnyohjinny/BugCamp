@@ -70,7 +70,7 @@
           "name": "cve-2014-6271",
           "vulnerability": "Shellshock (CVE-2014-6271)",
           "description": "A system monitoring dashboard that provides real-time server statistics and system health information through CGI-based web interfaces.",
-          "port": 9011,
+          "port": 9101,
           "objective": "Execute system commands",
           "category": "Command Injection"
         },
@@ -78,7 +78,7 @@
           "name": "jwt-1",
           "vulnerability": "JWT Algorithm Confusion Attack",
           "description": "A secure web application using JSON Web Tokens (JWT) for user authentication and session management with role-based access controls.",
-          "port": 9012,
+          "port": 9102,
           "objective": "Log in as admin",
           "category": "Authentication Bypass"
         },
@@ -86,7 +86,7 @@
           "name": "sqli-1",
           "vulnerability": "SQL Injection",
           "description": "A feature-rich news portal with user authentication, content management, and article publishing capabilities for journalists and editors.",
-          "port": 9013,
+          "port": 9103,
           "objective": "Extract admin credentials via SQL injection",
           "category": "SQL Injection"
         },
@@ -94,7 +94,7 @@
           "name": "pickle",
           "vulnerability": "Python Pickle Deserialization Attack",
           "description": "A Python web application that handles user sessions and data serialization for maintaining persistent user state across requests.",
-          "port": 9014,
+          "port": 9104,
           "objective": "Execute system commands",
           "category": "Deserialization"
         }
@@ -108,7 +108,7 @@
           "name": "cve-2016-10033",
           "vulnerability": "PHPMailer RCE (CVE-2016-10033)",
           "description": "A professional contact form service that handles email communications and message delivery for business websites using automated email processing.",
-          "port": 9021,
+          "port": 9201,
           "objective": "Execute system commands",
           "category": "Command Injection"
         },
@@ -116,7 +116,7 @@
           "name": "jwt-2",
           "vulnerability": "Advanced JWT Algorithm Confusion",
           "description": "An enterprise-grade application with enhanced JWT security measures for user authentication, featuring advanced token validation and cryptographic algorithms.",
-          "port": 9022,
+          "port": 9202,
           "objective": "Log in as admin",
           "category": "Authentication Bypass"
         }
@@ -130,7 +130,7 @@
           "name": "jwt-3",
           "vulnerability": "JWT Signature Bypass",
           "description": "A modern enterprise portal platform that provides secure access to corporate resources and administrative functions. Features user registration, authentication system, and role-based access controls for different organizational levels.",
-          "port": 9023,
+          "port": 9301,
           "objective": "Log in as admin",
           "category": "Authentication Bypass"
         }
@@ -144,7 +144,7 @@
           "name": "graphql-1",
           "vulnerability": "GraphQL Introspection Information Disclosure",
           "description": "A modern project management platform built with GraphQL API that provides comprehensive project tracking and team collaboration features for enterprise environments.",
-          "port": 9031,
+          "port": 9401,
           "objective": "Extract sensitive information via GraphQL introspection",
           "category": "Information Disclosure"
         }
@@ -158,7 +158,7 @@
           "name": "xssinclude",
           "vulnerability": "Cross-Site Scripting via JavaScript Include",
           "description": "A professional secure vault platform for managing personal secrets with dynamic JavaScript-based content loading and user session management.",
-          "port": 9041,
+          "port": 9501,
           "objective": "Extract user secrets via XSS",
           "category": "Cross-Site Scripting"
         }
@@ -172,7 +172,7 @@
           "name": "saml-1",
           "vulnerability": "SAML Response Signature Bypass",
           "description": "A professional enterprise identity management platform featuring SAML-based single sign-on with identity provider and service provider integration.",
-          "port": 9051,
+          "port": 9601,
           "objective": "Log in as admin via SAML response manipulation",
           "category": "Authentication Bypass"
         }
@@ -186,7 +186,7 @@
           "name": "signing-oracle",
           "vulnerability": "JWT Signing Oracle Attack",
           "description": "A secure enterprise key management platform with JWT-based session management and access controls for protecting sensitive cryptographic keys and data.",
-          "port": 9061,
+          "port": 9701,
           "objective": "Access admin secrets via JWT signing oracle",
           "category": "JWT Signature Vulnerability"
         }
@@ -200,7 +200,7 @@
           "name": "api-1",
           "vulnerability": "API Insecure Direct Object References (IDOR)",
           "description": "A professional secrets management platform with user authentication and API-based content access for storing and retrieving sensitive information.",
-          "port": 9071,
+          "port": 9801,
           "objective": "Access other users' secrets via API IDOR",
           "category": "Authorization Bypass"
         }

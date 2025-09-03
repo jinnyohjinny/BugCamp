@@ -3,7 +3,7 @@ services:
     build: .
     container_name: sqli-1-lab
     ports:
-      - "9013:80"
+      - "9103:80"
     networks:
       - labnet
     restart: unless-stopped
